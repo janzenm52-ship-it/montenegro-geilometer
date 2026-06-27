@@ -85,97 +85,140 @@
 
     /* ── 100 scene ── */
     .scene-100{
-      position:fixed;inset:0;pointer-events:none;z-index:200;
-      display:none;
+      position:fixed;inset:0;pointer-events:none;z-index:200;display:none;
     }
-    .liberty{
-      position:absolute;bottom:0;right:5%;font-size:8rem;
-      animation:clap 0.5s infinite alternate;
+    .liberty-stack{
+      position:absolute;bottom:0;right:4%;
+      display:flex;flex-direction:column;align-items:center;
     }
     .gorilla{
-      position:absolute;bottom:0;right:8%;font-size:4rem;
-      animation:climb 1s infinite;
+      font-size:5rem;
+      animation:gorillaRage .35s infinite alternate;
+      position:relative;z-index:2;
+    }
+    .liberty{
+      font-size:11rem;
+      animation:libertyClap .3s infinite alternate;
+      line-height:1;
     }
     .dorade{
-      position:absolute;bottom:20px;right:22%;font-size:4rem;
-      animation:wobble 1s infinite;
+      position:absolute;bottom:40px;left:4%;
+      font-size:5.5rem;
+      animation:doradeWobble .6s infinite;
     }
     .confetti-piece{
-      position:absolute;font-size:1.5rem;animation:fall linear infinite;
+      position:absolute;font-size:2rem;animation:fall linear infinite;
     }
-    @keyframes clap{from{transform:rotate(-5deg) scale(1)}to{transform:rotate(5deg) scale(1.05)}}
-    @keyframes climb{0%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-20px) rotate(5deg)}100%{transform:translateY(0) rotate(-5deg)}}
-    @keyframes wobble{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
-    @keyframes fall{0%{transform:translateY(-50px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+    @keyframes libertyClap{
+      from{transform:rotate(-8deg) scale(1)}
+      to{transform:rotate(8deg) scale(1.08)}
+    }
+    @keyframes gorillaRage{
+      from{transform:translateY(0) rotate(-12deg) scale(1)}
+      to{transform:translateY(-18px) rotate(12deg) scale(1.15)}
+    }
+    @keyframes doradeWobble{
+      0%{transform:rotate(-15deg) scale(1)}
+      50%{transform:rotate(15deg) scale(1.1)}
+      100%{transform:rotate(-15deg) scale(1)}
+    }
+    @keyframes fall{
+      0%{transform:translateY(-60px) rotate(0deg);opacity:1}
+      100%{transform:translateY(110vh) rotate(900deg);opacity:0}
+    }
 
     /* ── Vomit man (< 5) ── */
     .vomit-scene{
-      position:absolute;left:-90px;top:80px;font-size:3rem;
-      display:none;animation:vomitshake .4s infinite;
+      position:absolute;left:-100px;top:60px;font-size:3.5rem;
+      display:none;animation:vomitshake .25s infinite;
     }
     .vomit-arrow{
-      position:absolute;left:-30px;top:120px;font-size:1.5rem;
-      display:none;animation:pulse .5s infinite alternate;
+      position:absolute;left:-28px;top:108px;font-size:2rem;
+      display:none;animation:arrowPulse .35s infinite alternate;
     }
-    @keyframes vomitshake{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
-    @keyframes pulse{from{transform:scale(1)}to{transform:scale(1.2)}}
+    @keyframes vomitshake{
+      0%{transform:rotate(-12deg) scale(1)}
+      50%{transform:rotate(12deg) scale(1.08)}
+      100%{transform:rotate(-12deg) scale(1)}
+    }
+    @keyframes arrowPulse{from{transform:scale(1) translateX(0)}to{transform:scale(1.3) translateX(4px)}}
 
     /* ── Sparkler ── */
     .sparkler-anim{
-      position:absolute;top:-20px;right:10px;font-size:2rem;
-      display:none;animation:spark .3s infinite alternate;
+      position:absolute;top:-30px;right:5px;font-size:2.8rem;
+      display:none;animation:spark .2s infinite alternate;
     }
-    @keyframes spark{from{transform:scale(1) rotate(-10deg);filter:brightness(1)}to{transform:scale(1.2) rotate(10deg);filter:brightness(1.5)}}
+    @keyframes spark{
+      from{transform:scale(1) rotate(-15deg);filter:brightness(1) drop-shadow(0 0 4px gold)}
+      to{transform:scale(1.35) rotate(15deg);filter:brightness(2) drop-shadow(0 0 14px gold)}
+    }
 
     /* ── Fly ── */
     .fly-anim{
-      position:absolute;font-size:1.5rem;
-      display:none;animation:buzz 0.8s infinite;
+      position:absolute;font-size:2rem;
+      display:none;animation:buzz .5s infinite;
     }
-    @keyframes buzz{0%{transform:translate(0,0)}25%{transform:translate(3px,-2px)}50%{transform:translate(-2px,3px)}75%{transform:translate(4px,1px)}100%{transform:translate(0,0)}}
+    @keyframes buzz{
+      0%{transform:translate(0,0) rotate(0deg)}
+      20%{transform:translate(6px,-5px) rotate(15deg)}
+      40%{transform:translate(-5px,4px) rotate(-10deg)}
+      60%{transform:translate(8px,2px) rotate(20deg)}
+      80%{transform:translate(-3px,-6px) rotate(-5deg)}
+      100%{transform:translate(0,0) rotate(0deg)}
+    }
 
     /* ── Checkboxes ── */
-    .options-section{
-      flex:1;min-width:280px;max-width:560px;
-    }
+    .options-section{flex:1;min-width:280px;max-width:560px;}
     .options-section h2{
-      font-family:'Fredoka One',sans-serif;font-size:1.4rem;
-      margin-bottom:12px;text-align:center;
-      text-shadow:2px 2px 0 #000;
+      font-family:'Fredoka One',sans-serif;font-size:1.6rem;
+      margin-bottom:14px;text-align:center;
+      text-shadow:3px 3px 0 #000;
+      background:linear-gradient(90deg,#ffd93d,#ff6b35);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
     }
     .option-group{
-      background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);
-      border-radius:16px;padding:14px;margin-bottom:10px;
-      backdrop-filter:blur(6px);
+      background:rgba(255,255,255,.07);
+      border:3px solid rgba(255,255,255,.25);
+      border-radius:20px;padding:14px 12px;margin-bottom:12px;
+      box-shadow:4px 4px 0 rgba(0,0,0,.4);
+    }
+    .group-header{
+      font-family:'Fredoka One',sans-serif;font-size:1.05rem;
+      margin-bottom:10px;padding:6px 12px;
+      background:rgba(255,255,255,.12);border-radius:10px;
+      border:2px solid rgba(255,255,255,.2);
+      display:inline-block;
     }
     .option-item{
       display:flex;align-items:flex-start;gap:10px;
-      padding:8px 6px;border-radius:10px;cursor:pointer;
-      transition:background .12s;
+      padding:8px 8px;border-radius:12px;cursor:pointer;
+      transition:background .1s,transform .1s;
     }
-    .option-item:hover{background:rgba(255,255,255,.08)}
+    .option-item:hover{background:rgba(255,255,255,.12);transform:translateX(3px)}
+    .option-item:has(input:checked){
+      background:rgba(255,180,0,.15);
+      border:1px solid rgba(255,180,0,.3);
+    }
     .option-item input[type=checkbox]{
-      width:20px;height:20px;flex-shrink:0;cursor:pointer;
+      width:22px;height:22px;flex-shrink:0;cursor:pointer;
       accent-color:var(--orange);margin-top:2px;
     }
-    .option-text{font-size:.85rem;line-height:1.4;flex:1}
-    .option-emoji{font-size:1.1rem;flex-shrink:0}
-    .delta-badge{
-      flex-shrink:0;font-size:.78rem;font-weight:800;
-      padding:2px 8px;border-radius:10px;white-space:nowrap;margin-top:2px;
-    }
-    .delta-pos{background:#1a5c2e;color:#6ee898;border:1.5px solid #6ee898}
-    .delta-neg{background:#5c1a1a;color:#ff8a8a;border:1.5px solid #ff8a8a}
+    .option-text{font-size:.87rem;line-height:1.4;flex:1;font-weight:600}
+    .option-emoji{font-size:1.3rem;flex-shrink:0}
 
     footer{text-align:center;padding:20px;font-size:.78rem;opacity:.6}
     footer a{color:var(--yellow)}
 
-    @keyframes liquidWave{
-      0%,100%{transform:translateX(0)}
-      50%{transform:translateX(-5px)}
-    }
     @keyframes scoreChange{
-      0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}
+      0%{transform:scale(1)}
+      40%{transform:scale(1.4) rotate(-5deg)}
+      70%{transform:scale(0.9) rotate(3deg)}
+      100%{transform:scale(1) rotate(0deg)}
+    }
+    @keyframes glassShake{
+      0%,100%{transform:rotate(0deg)}
+      25%{transform:rotate(-4deg)}
+      75%{transform:rotate(4deg)}
     }
   </style>
 </head>
@@ -190,9 +233,11 @@
 
 <!-- 100-Szene Overlay -->
 <div class="scene-100" id="scene100">
-  <div class="liberty" id="liberty">🗽</div>
-  <div class="gorilla" id="gorilla">🦍</div>
-  <div class="dorade" id="dorade">🐟🍽️</div>
+  <div class="liberty-stack">
+    <div class="gorilla">🦍</div>
+    <div class="liberty">🗽</div>
+  </div>
+  <div class="dorade">🐠🍽️</div>
 </div>
 
 <!-- Hero -->
@@ -299,15 +344,15 @@
 
         <!-- Fruit on rim (≥ 70) -->
         <g id="fruitRim" opacity="0">
-          <text x="20" y="42" font-size="22">🍋</text>
-          <text x="168" y="42" font-size="22">🍓</text>
+          <text x="8" y="48" font-size="36">🍋</text>
+          <text x="162" y="48" font-size="36">🍓</text>
         </g>
 
         <!-- More fruit (≥ 95) -->
         <g id="moreFruit" opacity="0">
-          <text x="0" y="70" font-size="18">🍍</text>
-          <text x="185" y="70" font-size="18">🍊</text>
-          <text x="92" y="18" font-size="16">🍒</text>
+          <text x="-14" y="82" font-size="32">🍍</text>
+          <text x="186" y="82" font-size="32">🍊</text>
+          <text x="88" y="8" font-size="28">🍒</text>
         </g>
 
         <!-- Cocktail umbrella (≥ 85) -->
@@ -390,7 +435,7 @@ GROUP_ORDER.forEach(group => {
   if(!opts.length) return;
   const div = document.createElement('div');
   div.className = 'option-group';
-  div.innerHTML = `<div style="font-family:'Fredoka One',sans-serif;font-size:1rem;margin-bottom:8px">${GROUP_EMOJI[group]} ${group}</div>`;
+  div.innerHTML = `<div class="group-header">${GROUP_EMOJI[group]} ${group}</div>`;
   opts.forEach(opt => {
     const item = document.createElement('label');
     item.className = 'option-item';
@@ -398,7 +443,6 @@ GROUP_ORDER.forEach(group => {
       <input type="checkbox" id="${opt.id}"/>
       <span class="option-emoji">${opt.emoji}</span>
       <span class="option-text">${opt.label}</span>
-      <span class="delta-badge ${opt.delta>0?'delta-pos':'delta-neg'}">${opt.delta>0?'+':''}${opt.delta}</span>
     `;
     div.appendChild(item);
   });
@@ -460,8 +504,11 @@ function updateAll(){
   const disp = document.getElementById('scoreDisplay');
   disp.textContent = score;
   disp.style.animation='none';
+  const glassSvg = document.getElementById('glassSvg');
+  glassSvg.style.animation='none';
   requestAnimationFrame(()=>{
-    disp.style.animation='scoreChange .3s ease';
+    disp.style.animation='scoreChange .45s cubic-bezier(.34,1.56,.64,1)';
+    glassSvg.style.animation='glassShake .35s ease';
   });
 
   // Color of score
