@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Montenegro-Geilometer 🍹</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--orange:#ff6b35;--pink:#ff4081;--yellow:#ffd93d;--teal:#00bcd4;--purple:#9c27b0;--green:#4caf50;--dark:#1a1a2e}
+
+    body{
+      background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 70%,#533483 100%);
+      min-height:100vh;font-family:'Nunito',sans-serif;color:#fff;
+      padding-bottom:100px;
+    }
+
+    /* ── Cookie Banner ── */
+    #cookieBanner{
+      position:fixed;bottom:0;left:0;right:0;z-index:9999;
+      background:#111;color:#fff;padding:14px 20px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      font-size:.85rem;border-top:3px solid var(--orange);
+    }
+    #cookieBanner a{color:var(--yellow);text-decoration:underline}
+    #cookieBanner button{
+      background:var(--orange);color:#fff;border:none;padding:8px 20px;
+      border-radius:20px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;
+    }
+
+    /* ── Header ── */
+    .hero{
+      text-align:center;padding:28px 16px 10px;
+    }
+    .hero h1{
+      font-family:'Fredoka One',sans-serif;font-size:clamp(1.8rem,5vw,3rem);
+      text-shadow:3px 3px 0 #000,0 0 30px rgba(255,180,0,.5);
+      background:linear-gradient(90deg,#ffd93d,#ff6b35,#ff4081);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .hero p{opacity:.7;font-size:.9rem;margin-top:6px}
+
+    /* ── Layout ── */
+    .main-layout{
+      display:flex;gap:24px;align-items:flex-start;justify-content:center;
+      flex-wrap:wrap;padding:0 16px;max-width:1100px;margin:0 auto;
+    }
+
+    /* ── Glass Section ── */
+    .glass-section{
+      flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:10px;
+      position:sticky;top:20px;
+    }
+
+    .score-display{
+      font-family:'Fredoka One',sans-serif;font-size:3.5rem;
+      text-align:center;line-height:1;
+      text-shadow:3px 3px 0 #000;
+      transition:all .3s;
+    }
+    .score-label{font-size:.85rem;opacity:.7;text-align:center;margin-top:2px}
+
+    /* Glass container */
+    .glass-wrap{
+      position:relative;width:220px;height:380px;
+    }
+
+    /* Base SVG glass */
+    #glassSvg{width:220px;height:380px;overflow:visible}
+
+    /* Overlay elements */
+    .glass-overlay{
+      position:absolute;pointer-events:none;
+      display:none;
+    }
+
+    /* ── Status text ── */
+    .status-text{
+      font-family:'Fredoka One',sans-serif;font-size:1.1rem;
+      text-align:center;max-width:220px;
+      padding:8px 12px;border-radius:12px;border:3px solid rgba(255,255,255,.3);
+      background:rgba(255,255,255,.1);backdrop-filter:blur(4px);
+      min-height:50px;line-height:1.3;
+    }
+
+    /* ── 100 scene ── */
+    .scene-100{
+      position:fixed;inset:0;pointer-events:none;z-index:200;
+      display:none;
+    }
+    .liberty{
+      position:absolute;bottom:0;right:5%;font-size:8rem;
+      animation:clap 0.5s infinite alternate;
+    }
+    .gorilla{
+      position:absolute;bottom:0;right:8%;font-size:4rem;
+      animation:climb 1s infinite;
+    }
+    .dorade{
+      position:absolute;bottom:20px;right:22%;font-size:4rem;
+      animation:wobble 1s infinite;
+    }
+    .confetti-piece{
+      position:absolute;font-size:1.5rem;animation:fall linear infinite;
+    }
+    @keyframes clap{from{transform:rotate(-5deg) scale(1)}to{transform:rotate(5deg) scale(1.05)}}
+    @keyframes climb{0%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-20px) rotate(5deg)}100%{transform:translateY(0) rotate(-5deg)}}
+    @keyframes wobble{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+    @keyframes fall{0%{transform:translateY(-50px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+    /* ── Vomit man (< 5) ── */
+    .vomit-scene{
+      position:absolute;left:-90px;top:80px;font-size:3rem;
+      display:none;animation:vomitshake .4s infinite;
+    }
+    .vomit-arrow{
+      position:absolute;left:-30px;top:120px;font-size:1.5rem;
+      display:none;animation:pulse .5s infinite alternate;
+    }
+    @keyframes vomitshake{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+    @keyframes pulse{from{transform:scale(1)}to{transform:scale(1.2)}}
+
+    /* ── Sparkler ── */
+    .sparkler-anim{
+      position:absolute;top:-20px;right:10px;font-size:2rem;
+      display:none;animation:spark .3s infinite alternate;
+    }
+    @keyframes spark{from{transform:scale(1) rotate(-10deg);filter:brightness(1)}to{transform:scale(1.2) rotate(10deg);filter:brightness(1.5)}}
+
+    /* ── Fly ── */
+    .fly-anim{
+      position:absolute;font-size:1.5rem;
+      display:none;animation:buzz 0.8s infinite;
+    }
+    @keyframes buzz{0%{transform:translate(0,0)}25%{transform:translate(3px,-2px)}50%{transform:translate(-2px,3px)}75%{transform:translate(4px,1px)}100%{transform:translate(0,0)}}
+
+    /* ── Checkboxes ── */
+    .options-section{
+      flex:1;min-width:280px;max-width:560px;
+    }
+    .options-section h2{
+      font-family:'Fredoka One',sans-serif;font-size:1.4rem;
+      margin-bottom:12px;text-align:center;
+      text-shadow:2px 2px 0 #000;
+    }
+    .option-group{
+      background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);
+      border-radius:16px;padding:14px;margin-bottom:10px;
+      backdrop-filter:blur(6px);
+    }
+    .option-item{
+      display:flex;align-items:flex-start;gap:10px;
+      padding:8px 6px;border-radius:10px;cursor:pointer;
+      transition:background .12s;
+    }
+    .option-item:hover{background:rgba(255,255,255,.08)}
+    .option-item input[type=checkbox]{
+      width:20px;height:20px;flex-shrink:0;cursor:pointer;
+      accent-color:var(--orange);margin-top:2px;
+    }
+    .option-text{font-size:.85rem;line-height:1.4;flex:1}
+    .option-emoji{font-size:1.1rem;flex-shrink:0}
+    .delta-badge{
+      flex-shrink:0;font-size:.78rem;font-weight:800;
+      padding:2px 8px;border-radius:10px;white-space:nowrap;margin-top:2px;
+    }
+    .delta-pos{background:#1a5c2e;color:#6ee898;border:1.5px solid #6ee898}
+    .delta-neg{background:#5c1a1a;color:#ff8a8a;border:1.5px solid #ff8a8a}
+
+    footer{text-align:center;padding:20px;font-size:.78rem;opacity:.6}
+    footer a{color:var(--yellow)}
+
+    @keyframes liquidWave{
+      0%,100%{transform:translateX(0)}
+      50%{transform:translateX(-5px)}
+    }
+    @keyframes scoreChange{
+      0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cookie Banner -->
+<div id="cookieBanner">
+  <span>🍪 Diese Seite verwendet <strong>keine Cookies</strong> und kein Tracking. <a href="impressum.html">Datenschutz & Impressum</a></span>
+  <button onclick="document.getElementById('cookieBanner').style.display='none';sessionStorage.setItem('cb','1')">Verstanden 🍹</button>
+</div>
+<script>if(sessionStorage.getItem('cb'))document.getElementById('cookieBanner').style.display='none'</script>
+
+<!-- 100-Szene Overlay -->
+<div class="scene-100" id="scene100">
+  <div class="liberty" id="liberty">🗽</div>
+  <div class="gorilla" id="gorilla">🦍</div>
+  <div class="dorade" id="dorade">🐟🍽️</div>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>🍹 Montenegro-Geilometer 🍹</h1>
+  <p>Wie geil wird der Urlaub? Hak ab und schau es dir an!</p>
+</div>
+
+<div class="main-layout">
+
+  <!-- Glass -->
+  <div class="glass-section">
+    <div class="score-display" id="scoreDisplay">50</div>
+    <div class="score-label">/ 100 Geilheit-Punkte</div>
+
+    <div class="glass-wrap" id="glassWrap">
+
+      <!-- Vomit man (< 5) -->
+      <div class="vomit-scene" id="vomitMan">🤮</div>
+      <div class="vomit-arrow" id="vomitArrow">➡️</div>
+
+      <!-- Sparkler (≥ 90) -->
+      <div class="sparkler-anim" id="sparkler">✨🎇</div>
+
+      <!-- Fly (< 20) -->
+      <div class="fly-anim" id="fly" style="top:60%;left:40%">🪰</div>
+
+      <svg id="glassSvg" viewBox="0 0 220 380" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Clip path matching glass interior -->
+          <clipPath id="glassClip">
+            <polygon points="28,28 192,28 170,310 50,310"/>
+          </clipPath>
+          <!-- Liquid gradient (updates via JS) -->
+          <linearGradient id="liquidGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop id="liqStop1" offset="0%" stop-color="#ff9f43"/>
+            <stop id="liqStop2" offset="100%" stop-color="#ee5a24"/>
+          </linearGradient>
+          <!-- Shine gradient -->
+          <linearGradient id="shineGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.4)"/>
+            <stop offset="40%" stop-color="rgba(255,255,255,0.0)"/>
+          </linearGradient>
+          <!-- Wave filter -->
+          <filter id="wave">
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="2" result="noise" seed="2">
+              <animate attributeName="seed" from="1" to="10" dur="2s" repeatCount="indefinite"/>
+            </feTurbulence>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+
+        <!-- Liquid fill (clipped to glass shape) -->
+        <rect id="liquidRect" x="0" y="310" width="220" height="0"
+              clip-path="url(#glassClip)" fill="url(#liquidGrad)" filter="url(#wave)"/>
+
+        <!-- Lipstick mark (< 10) -->
+        <text id="lipstick" x="195" y="36" font-size="20" opacity="0" transform="rotate(-20,195,36)">💋</text>
+
+        <!-- Glass body outline -->
+        <polygon points="28,28 192,28 170,310 50,310"
+                 fill="rgba(255,255,255,0.07)" stroke="#333" stroke-width="5" stroke-linejoin="round"/>
+
+        <!-- Shine on glass -->
+        <polygon points="28,28 70,28 55,310 50,310"
+                 fill="url(#shineGrad)" opacity="0.5"/>
+
+        <!-- Ice cubes (≥ 50) -->
+        <g id="iceCubes" opacity="0">
+          <rect x="70" y="110" width="28" height="28" rx="4" fill="rgba(200,240,255,0.7)" stroke="rgba(100,200,255,0.8)" stroke-width="2"/>
+          <rect x="110" y="95" width="32" height="32" rx="4" fill="rgba(200,240,255,0.65)" stroke="rgba(100,200,255,0.8)" stroke-width="2"/>
+          <rect x="85" y="140" width="24" height="24" rx="4" fill="rgba(200,240,255,0.7)" stroke="rgba(100,200,255,0.8)" stroke-width="2"/>
+          <rect x="130" y="130" width="26" height="26" rx="4" fill="rgba(200,240,255,0.65)" stroke="rgba(100,200,255,0.8)" stroke-width="2"/>
+          <!-- Highlights on ice -->
+          <line x1="74" y1="112" x2="82" y2="112" stroke="white" stroke-width="1.5" opacity="0.8"/>
+          <line x1="114" y1="97" x2="124" y2="97" stroke="white" stroke-width="1.5" opacity="0.8"/>
+        </g>
+
+        <!-- Score text on liquid -->
+        <text id="liquidScore" x="110" y="210"
+              text-anchor="middle" font-size="42" font-weight="900"
+              fill="rgba(255,255,255,0.9)" font-family="Fredoka One, sans-serif"
+              stroke="#000" stroke-width="3" paint-order="stroke"/>
+
+        <!-- Straw (≥ 30) -->
+        <g id="straw" opacity="0">
+          <rect x="148" y="20" width="10" height="220" rx="5"
+                fill="none" stroke="#ff4081" stroke-width="10"
+                stroke-dasharray="15 15"/>
+          <rect x="148" y="20" width="10" height="220" rx="5"
+                fill="none" stroke="#fff" stroke-width="10"
+                stroke-dasharray="15 15" stroke-dashoffset="15"/>
+        </g>
+
+        <!-- Glass rim top line -->
+        <line x1="28" y1="28" x2="192" y2="28" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+
+        <!-- Stem -->
+        <rect x="101" y="310" width="18" height="30" rx="4" fill="#aaa" stroke="#333" stroke-width="3"/>
+        <!-- Base -->
+        <ellipse cx="110" cy="346" rx="52" ry="12" fill="#bbb" stroke="#333" stroke-width="3"/>
+        <!-- Base shine -->
+        <ellipse cx="100" cy="343" rx="20" ry="5" fill="rgba(255,255,255,0.4)"/>
+
+        <!-- Fruit on rim (≥ 70) -->
+        <g id="fruitRim" opacity="0">
+          <text x="20" y="42" font-size="22">🍋</text>
+          <text x="168" y="42" font-size="22">🍓</text>
+        </g>
+
+        <!-- More fruit (≥ 95) -->
+        <g id="moreFruit" opacity="0">
+          <text x="0" y="70" font-size="18">🍍</text>
+          <text x="185" y="70" font-size="18">🍊</text>
+          <text x="92" y="18" font-size="16">🍒</text>
+        </g>
+
+        <!-- Cocktail umbrella (≥ 85) -->
+        <g id="umbrella" opacity="0">
+          <text x="42" y="36" font-size="28">☂️</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="status-text" id="statusText">🍹 Auf nach Montenegro!</div>
+  </div>
+
+  <!-- Options -->
+  <div class="options-section">
+    <h2>🎲 Was passiert auf dem Trip?</h2>
+    <div id="optionsContainer"></div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="impressum.html">📄 Impressum & Datenschutz</a><br/>
+  <small>Rein fiktive Unterhaltung. Kein echter Urlaubsschadensersatz.</small>
+</footer>
+
+<script>
+const BASE = 50;
+
+const OPTIONS = [
+  // Negative events
+  {id:'dennis-patrol',    label:'Dennis packt seine Uniform aus und macht vor der Mittagssonne noch ne kurze Strandstreife',  emoji:'👮‍♂️☀️', delta:-10},
+  {id:'luke-anzug',       label:'Luke gibt bei der Sonne keine Anzugserleichterung frei',                                      emoji:'🥵👔',  delta:-12},
+  {id:'irom-heimweh',     label:'Irom hat Heimweh und es kullern die ersten Tränen',                                           emoji:'😢',    delta:-2},
+  {id:'irom-latinos',     label:'Irom erfährt, dass Montenegriner auch keine Latinos sind',                                    emoji:'💃❌',  delta:-6},
+  {id:'kai-vergiftung',   label:'Kai bekommt wegen Janzen eine Fischvergiftung',                                               emoji:'🤢🐟',  delta:-10},
+  {id:'kai-tabletten',    label:'Kai realisiert am Flughafen, dass wir gleich auf mehreren KM Höhe sind und knallt sich so viele „Reisetabletten" rein, dass er ganz Montenegro durchpennt', emoji:'💊😴', delta:-5},
+  {id:'ramon-anruf',      label:'Ramon ruft an',                                                                               emoji:'📱😱',  delta:-15},
+  {id:'janzen-strand',    label:'Janzen schläft wieder am Strand ein',                                                         emoji:'😴🏖️', delta:-10},
+  {id:'deria-lachen',     label:'Derias Lachen löst am Flughafen Feueralarm aus',                                              emoji:'😂🚨',  delta:-2},
+  {id:'joe-radler3',      label:'Joe trinkt 3 Radler (Absturz)',                                                               emoji:'🍺💥',  delta:-12},
+  {id:'dennis-nur-er',    label:'Es stellt sich raus, dass das Frühstück nur für Dennis war',                                  emoji:'😤🍳',  delta:-8},
+  {id:'carsten-shirt-nein',label:'Carsten darf sein Shirt nicht ausziehen (Leine reicht bis Montenegro)',                      emoji:'👕🚫',  delta:-3},
+  {id:'carsten-shirt-ja', label:'Carsten darf sein Shirt ausziehen, aber es wird zu viel für Ambar',                          emoji:'😳',    delta:-6},
+  {id:'diego-dauerwelle', label:'Diego kommt mit Dauerwelle, weil sein Friseur seit 4 Wochen im Urlaub ist',                  emoji:'💈😬',  delta:-2},
+  // Positive events
+  {id:'julien-cocktail',  label:'Julien nimmt seine Rolle als Cocktailfee ernst und macht allen eine Runde fertig',            emoji:'🧚🍹',  delta:+10},
+  {id:'irom-volllaufen',  label:'Irom lässt sich volllaufen',                                                                  emoji:'🍻😁',  delta:+7},
+  {id:'joe-ems',          label:'Joe findet seinen EMS in Montenegro wieder und erfährt, dass er vor einem Jahr zwecks Bärenabwehr mitgenommen wurde', emoji:'🐻😂', delta:+5},
+  {id:'janzen-fisch',     label:'Janzen fängt nen Fisch',                                                                      emoji:'🎣🐟',  delta:+8},
+  {id:'kai-bernie',       label:'Die Gruppe spielt mit Kai auf Reisetabletten „Immer Ärger mit Bernie" und es fällt keinem auf',emoji:'🎭😂',  delta:+15},
+  {id:'sascha-dabei',     label:'Sascha ist plötzlich dabei',                                                                  emoji:'🎉😍',  delta:+25},
+  {id:'joe-radler1',      label:'Joe trinkt 1 Radler',                                                                        emoji:'🍺',    delta:+5},
+  {id:'joe-radler2',      label:'Joe trinkt 2 Radler',                                                                        emoji:'🍺🍺',  delta:+10},
+  {id:'dennis-fruehstueck',label:'Dennis macht Frühstück',                                                                    emoji:'🍳',    delta:+5},
+  {id:'diego-friseur',    label:'Diego trifft seinen Friseur, da der grade auch in Montenegro ist',                            emoji:'✂️😄',  delta:+4},
+  {id:'diego-puenktlich', label:'Diego ist pünktlich am Flughafen (Deutsche Sommerzeit)',                                      emoji:'✈️⏰',  delta:+4},
+  {id:'ambar-niederlaender',label:'Ambar erwähnt in Montenegro nicht, dass sie Niederländerin ist (extrem unwahrscheinlich)',  emoji:'🇳🇱🤫', delta:+7},
+  {id:'keiner-stirbt',    label:'Keiner stirbt oder wird schwer verletzt',                                                     emoji:'🙏✨',  delta:+18},
+];
+
+// Build options HTML
+const container = document.getElementById('optionsContainer');
+const negOpts = OPTIONS.filter(o=>o.delta<0);
+const posOpts = OPTIONS.filter(o=>o.delta>0);
+
+function buildGroup(opts, title) {
+  const div = document.createElement('div');
+  div.className = 'option-group';
+  div.innerHTML = `<div style="font-family:'Fredoka One',sans-serif;font-size:1rem;margin-bottom:8px;opacity:.7">${title}</div>`;
+  opts.forEach(opt => {
+    const item = document.createElement('label');
+    item.className = 'option-item';
+    item.innerHTML = `
+      <input type="checkbox" id="${opt.id}"/>
+      <span class="option-emoji">${opt.emoji}</span>
+      <span class="option-text">${opt.label}</span>
+      <span class="delta-badge ${opt.delta>0?'delta-pos':'delta-neg'}">${opt.delta>0?'+':''}${opt.delta}</span>
+    `;
+    div.appendChild(item);
+  });
+  return div;
+}
+
+container.appendChild(buildGroup(posOpts, '✅ Gute Vibes'));
+container.appendChild(buildGroup(negOpts, '💀 Urlaubskiller'));
+
+// Event listeners
+document.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+  cb.addEventListener('change', ()=>updateAll());
+});
+
+function getScore(){
+  let s = BASE;
+  OPTIONS.forEach(o=>{
+    const el = document.getElementById(o.id);
+    if(el&&el.checked) s+=o.delta;
+  });
+  return Math.max(0,Math.min(100,s));
+}
+
+function lerpColor(a,b,t){
+  const ah=parseInt(a.slice(1),16), bh=parseInt(b.slice(1),16);
+  const ar=(ah>>16)&0xff,ag=(ah>>8)&0xff,ab=ah&0xff;
+  const br=(bh>>16)&0xff,bg=(bh>>8)&0xff,bb=bh&0xff;
+  const r=Math.round(ar+(br-ar)*t), g=Math.round(ag+(bg-ag)*t), bl2=Math.round(ab+(bb-ab)*t);
+  return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${bl2.toString(16).padStart(2,'0')}`;
+}
+
+const STATUS = [
+  [0,  '🤢 Jemand hat ins Glas gefasst... oder schlimmer.'],
+  [5,  '😖 Das war mal ein guter Plan.'],
+  [10, '😔 So mittelprächtig wie montenegrinisches Wetter im November.'],
+  [20, '😐 Naja. Immerhin ist man irgendwo.'],
+  [30, '😊 Könnte schlimmer sein. Straw rein, Musik an.'],
+  [40, '🙂 Ganz okayer Urlaubsvibe.'],
+  [50, '😄 Solider Urlaub. Macht Bock!'],
+  [60, '😎 Das wird ein guter Trip!'],
+  [70, '🥳 Die Stimmung steigt mit den Früchten am Glas!'],
+  [80, '🎉 Urlaubsglück auf höchstem Niveau!'],
+  [85, '🌟 Der Cocktailschirm ist raus – Vollgas!'],
+  [90, '🎇 Wunderkerze brennt – absolute Pracht!'],
+  [95, '🍍🔥 Das ist der beste Urlaub aller Zeiten!'],
+  [100,'🗽🦍🐟 LEGENDÄR. Geschichte wird geschrieben!'],
+];
+
+function getStatus(score){
+  let msg = STATUS[0][1];
+  for(const [threshold, text] of STATUS){
+    if(score >= threshold) msg = text;
+  }
+  return msg;
+}
+
+let prevScore = BASE;
+function updateAll(){
+  const score = getScore();
+
+  // Score display
+  const disp = document.getElementById('scoreDisplay');
+  disp.textContent = score;
+  disp.style.animation='none';
+  requestAnimationFrame(()=>{
+    disp.style.animation='scoreChange .3s ease';
+  });
+
+  // Color of score
+  if(score < 30) disp.style.color='#ff6b6b';
+  else if(score < 60) disp.style.color='#ffd93d';
+  else disp.style.color='#6ee898';
+
+  // Status text
+  document.getElementById('statusText').textContent = getStatus(score);
+
+  // --- Liquid fill ---
+  // Glass interior: top at y=28, bottom at y=310, height=282
+  const glassTop=28, glassBot=310, glassH=glassBot-glassTop;
+  const fillH = (score/100)*glassH;
+  const liquidTop = glassBot - fillH;
+  const rect = document.getElementById('liquidRect');
+  rect.setAttribute('y', liquidTop);
+  rect.setAttribute('height', fillH);
+
+  // Liquid color by score
+  let c1,c2;
+  if(score<10){c1='#3d1c02';c2='#5c2a05';}
+  else if(score<30){c1='#7b3f00';c2='#a05214';}
+  else if(score<50){c1='#c0873a';c2='#e6a847';}
+  else if(score<70){c1='#ff9f43';c2='#f39c12';}
+  else if(score<90){c1='#ff6b9d';c2='#f97316';}
+  else{c1='#ff0099';c2='#ff6b35';}
+  document.getElementById('liqStop1').setAttribute('stop-color',c1);
+  document.getElementById('liqStop2').setAttribute('stop-color',c2);
+
+  // Score inside liquid (only visible if liquid is there)
+  const liquidScore = document.getElementById('liquidScore');
+  liquidScore.setAttribute('y', Math.max(liquidTop+50, glassBot-20));
+  liquidScore.textContent = score;
+  liquidScore.setAttribute('opacity', score>5?'1':'0.4');
+
+  // --- Overlays ---
+  // Vomit man (< 5)
+  const showVomit = score < 5;
+  document.getElementById('vomitMan').style.display = showVomit?'block':'none';
+  document.getElementById('vomitArrow').style.display = showVomit?'block':'none';
+
+  // Lipstick (< 10)
+  document.getElementById('lipstick').setAttribute('opacity', score<10?'1':'0');
+
+  // Fly (< 20)
+  document.getElementById('fly').style.display = score<20?'block':'none';
+
+  // Straw (≥ 30)
+  document.getElementById('straw').setAttribute('opacity', score>=30?'1':'0');
+
+  // Ice cubes (≥ 50)
+  document.getElementById('iceCubes').setAttribute('opacity', score>=50?'1':'0');
+
+  // Fruit on rim (≥ 70)
+  document.getElementById('fruitRim').setAttribute('opacity', score>=70?'1':'0');
+
+  // Umbrella (≥ 85)
+  document.getElementById('umbrella').setAttribute('opacity', score>=85?'1':'0');
+
+  // Sparkler (≥ 90)
+  document.getElementById('sparkler').style.display = score>=90?'block':'none';
+
+  // More fruit (≥ 95)
+  document.getElementById('moreFruit').setAttribute('opacity', score>=95?'1':'0');
+
+  // 100 scene
+  const scene = document.getElementById('scene100');
+  if(score===100){
+    scene.style.display='block';
+    // Add confetti
+    if(!scene.querySelector('.confetti-piece')){
+      const emojis=['🎉','🥳','🍹','⭐','🔥','💥','🌟'];
+      for(let i=0;i<20;i++){
+        const el=document.createElement('div');
+        el.className='confetti-piece';
+        el.textContent=emojis[i%emojis.length];
+        el.style.cssText=`left:${Math.random()*100}%;top:-50px;animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*2}s`;
+        scene.appendChild(el);
+      }
+    }
+  } else {
+    scene.style.display='none';
+  }
+
+  prevScore=score;
+}
+
+// Init
+updateAll();
+</script>
+</body>
+</html>
