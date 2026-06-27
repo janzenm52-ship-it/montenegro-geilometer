@@ -119,17 +119,43 @@
     }
     .liberty-stack{
       position:absolute;bottom:0;right:4%;
-      display:flex;flex-direction:column;align-items:center;
+      display:flex;flex-direction:row;align-items:flex-end;
+      gap:4px;
+      animation:tangoSway 1.2s ease-in-out infinite;
+      transform-origin:center bottom;
     }
     .gorilla{
-      font-size:5rem;
-      animation:gorillaRage .35s infinite alternate;
-      position:relative;z-index:2;
+      font-size:7rem;
+      line-height:1;
+      animation:gorillaTango 1.2s ease-in-out infinite;
+      transform-origin:bottom center;
     }
     .liberty{
-      font-size:11rem;
-      animation:libertyClap .3s infinite alternate;
+      font-size:10rem;
       line-height:1;
+      animation:libertyTango 1.2s ease-in-out infinite;
+      transform-origin:bottom center;
+    }
+    @keyframes tangoSway{
+      0%  {transform:rotate(-6deg) translateX(-8px)}
+      25% {transform:rotate(0deg)  translateX(0px)}
+      50% {transform:rotate(6deg)  translateX(8px)}
+      75% {transform:rotate(0deg)  translateX(0px)}
+      100%{transform:rotate(-6deg) translateX(-8px)}
+    }
+    @keyframes gorillaTango{
+      0%  {transform:rotate(10deg) scaleX(-1)}
+      25% {transform:rotate(4deg)  scaleX(-1) translateY(-12px)}
+      50% {transform:rotate(-8deg) scaleX(-1)}
+      75% {transform:rotate(-14deg) scaleX(-1) translateY(-6px)}
+      100%{transform:rotate(10deg) scaleX(-1)}
+    }
+    @keyframes libertyTango{
+      0%  {transform:rotate(-8deg)}
+      25% {transform:rotate(-2deg) translateY(-8px)}
+      50% {transform:rotate(10deg)}
+      75% {transform:rotate(6deg)  translateY(-4px)}
+      100%{transform:rotate(-8deg)}
     }
     .dorade{
       position:absolute;bottom:40px;left:4%;
@@ -139,15 +165,14 @@
     .confetti-piece{
       position:absolute;font-size:2rem;animation:fall linear infinite;
     }
-    @keyframes libertyClap{
-      0%{transform:rotate(-4deg)}
-      50%{transform:rotate(4deg)}
-      100%{transform:rotate(-4deg)}
+    @keyframes musicFloat{
+      0%  {transform:translateY(0)   rotate(-10deg);opacity:1}
+      100%{transform:translateY(-80px) rotate(20deg);opacity:0}
     }
-    @keyframes gorillaRage{
-      0%{transform:translateY(0) rotate(-6deg)}
-      50%{transform:translateY(-10px) rotate(6deg)}
-      100%{transform:translateY(0) rotate(-6deg)}
+    .music-note{
+      position:absolute;font-size:2rem;
+      animation:musicFloat 1.6s ease-out infinite;
+      pointer-events:none;
     }
     @keyframes doradeWobble{
       0%,100%{transform:rotate(-8deg)}
@@ -449,6 +474,10 @@
     <div class="liberty">🗽</div>
   </div>
   <div class="dorade">🐠🍽️</div>
+  <div class="music-note" style="right:22%;bottom:220px;animation-delay:0s">🎵</div>
+  <div class="music-note" style="right:18%;bottom:260px;animation-delay:.5s">🎶</div>
+  <div class="music-note" style="right:28%;bottom:240px;animation-delay:.9s">🎵</div>
+  <div class="music-note" style="right:14%;bottom:200px;animation-delay:1.3s">🎸</div>
 </div>
 
 <!-- Hero -->
