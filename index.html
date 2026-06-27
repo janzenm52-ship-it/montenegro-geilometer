@@ -337,46 +337,60 @@
 const BASE = 50;
 
 const OPTIONS = [
-  // Negative events
-  {id:'dennis-patrol',    label:'Dennis packt seine Uniform aus und macht vor der Mittagssonne noch ne kurze Strandstreife',  emoji:'👮‍♂️☀️', delta:-10},
-  {id:'luke-anzug',       label:'Luke gibt bei der Sonne keine Anzugserleichterung frei',                                      emoji:'🥵👔',  delta:-12},
-  {id:'irom-heimweh',     label:'Irom hat Heimweh und es kullern die ersten Tränen',                                           emoji:'😢',    delta:-2},
-  {id:'irom-latinos',     label:'Irom erfährt, dass Montenegriner auch keine Latinos sind',                                    emoji:'💃❌',  delta:-6},
-  {id:'kai-vergiftung',   label:'Kai bekommt wegen Janzen eine Fischvergiftung',                                               emoji:'🤢🐟',  delta:-10},
-  {id:'kai-tabletten',    label:'Kai realisiert am Flughafen, dass wir gleich auf mehreren KM Höhe sind und knallt sich so viele „Reisetabletten" rein, dass er ganz Montenegro durchpennt', emoji:'💊😴', delta:-5},
-  {id:'ramon-anruf',      label:'Ramon ruft an',                                                                               emoji:'📱😱',  delta:-15},
-  {id:'janzen-strand',    label:'Janzen schläft wieder am Strand ein',                                                         emoji:'😴🏖️', delta:-10},
-  {id:'deria-lachen',     label:'Derias Lachen löst am Flughafen Feueralarm aus',                                              emoji:'😂🚨',  delta:-2},
-  {id:'joe-radler3',      label:'Joe trinkt 3 Radler (Absturz)',                                                               emoji:'🍺💥',  delta:-12},
-  {id:'dennis-nur-er',    label:'Es stellt sich raus, dass das Frühstück nur für Dennis war',                                  emoji:'😤🍳',  delta:-8},
-  {id:'carsten-shirt-nein',label:'Carsten darf sein Shirt nicht ausziehen (Leine reicht bis Montenegro)',                      emoji:'👕🚫',  delta:-3},
-  {id:'carsten-shirt-ja', label:'Carsten darf sein Shirt ausziehen, aber es wird zu viel für Ambar',                          emoji:'😳',    delta:-6},
-  {id:'diego-dauerwelle', label:'Diego kommt mit Dauerwelle, weil sein Friseur seit 4 Wochen im Urlaub ist',                  emoji:'💈😬',  delta:-2},
-  // Positive events
-  {id:'julien-cocktail',  label:'Julien nimmt seine Rolle als Cocktailfee ernst und macht allen eine Runde fertig',            emoji:'🧚🍹',  delta:+10},
-  {id:'irom-volllaufen',  label:'Irom lässt sich volllaufen',                                                                  emoji:'🍻😁',  delta:+7},
-  {id:'joe-ems',          label:'Joe findet seinen EMS in Montenegro wieder und erfährt, dass er vor einem Jahr zwecks Bärenabwehr mitgenommen wurde', emoji:'🐻😂', delta:+5},
-  {id:'janzen-fisch',     label:'Janzen fängt nen Fisch',                                                                      emoji:'🎣🐟',  delta:+8},
-  {id:'kai-bernie',       label:'Die Gruppe spielt mit Kai auf Reisetabletten „Immer Ärger mit Bernie" und es fällt keinem auf',emoji:'🎭😂',  delta:+15},
-  {id:'sascha-dabei',     label:'Sascha ist plötzlich dabei',                                                                  emoji:'🎉😍',  delta:+25},
-  {id:'joe-radler1',      label:'Joe trinkt 1 Radler',                                                                        emoji:'🍺',    delta:+5},
-  {id:'joe-radler2',      label:'Joe trinkt 2 Radler',                                                                        emoji:'🍺🍺',  delta:+10},
-  {id:'dennis-fruehstueck',label:'Dennis macht Frühstück',                                                                    emoji:'🍳',    delta:+5},
-  {id:'diego-friseur',    label:'Diego trifft seinen Friseur, da der grade auch in Montenegro ist',                            emoji:'✂️😄',  delta:+4},
-  {id:'diego-puenktlich', label:'Diego ist pünktlich am Flughafen (Deutsche Sommerzeit)',                                      emoji:'✈️⏰',  delta:+4},
-  {id:'ambar-niederlaender',label:'Ambar erwähnt in Montenegro nicht, dass sie Niederländerin ist (extrem unwahrscheinlich)',  emoji:'🇳🇱🤫', delta:+7},
-  {id:'keiner-stirbt',    label:'Keiner stirbt oder wird schwer verletzt',                                                     emoji:'🙏✨',  delta:+18},
+  // Luke
+  {id:'luke-anzug',         label:'Luke gibt bei der Sonne keine Anzugserleichterung frei',                                                          emoji:'🥵👔',  delta:-12, group:'Luke'},
+  {id:'luke-falsche-finca', label:'Luke feiert in der falschen Finca, weil er sich wieder „in der Tür vertan hat"',                                  emoji:'🚪😬',  delta:-3,  group:'Luke'},
+  {id:'luke-schuld-janzen', label:'Luke gibt Janzen die Schuld für die falsche Finca',                                                               emoji:'👉😤',  delta:-5,  group:'Luke'},
+  // Irom
+  {id:'irom-heimweh',       label:'Irom hat Heimweh und es kullern die ersten Tränen',                                                               emoji:'😢',    delta:-2,  group:'Irom'},
+  {id:'irom-volllaufen',    label:'Irom lässt sich volllaufen',                                                                                      emoji:'🍻😁',  delta:+7,  group:'Irom'},
+  {id:'irom-latinos',       label:'Irom erfährt, dass Montenegriner auch keine Latinos sind',                                                        emoji:'💃❌',  delta:-6,  group:'Irom'},
+  // Joe
+  {id:'joe-ems',            label:'Joe findet seinen EMS in Montenegro wieder und erfährt, dass er vor einem Jahr zwecks Bärenabwehr mitgenommen wurde', emoji:'🐻😂', delta:+5, group:'Joe'},
+  {id:'joe-radler1',        label:'Joe trinkt 1 Radler',                                                                                             emoji:'🍺',    delta:+5,  group:'Joe'},
+  {id:'joe-radler2',        label:'Joe trinkt 2 Radler',                                                                                             emoji:'🍺🍺',  delta:+10, group:'Joe'},
+  {id:'joe-radler3',        label:'Joe trinkt 3 Radler (Absturz)',                                                                                   emoji:'🍺💥',  delta:-12, group:'Joe'},
+  // Kai
+  {id:'kai-vergiftung',     label:'Kai bekommt wegen Janzen eine Fischvergiftung',                                                                   emoji:'🤢🐟',  delta:-10, group:'Kai'},
+  {id:'kai-tabletten',      label:'Kai realisiert am Flughafen, dass wir gleich auf mehreren KM Höhe sind und knallt sich so viele „Reisetabletten" rein, dass er ganz Montenegro durchpennt', emoji:'💊😴', delta:-5, group:'Kai'},
+  {id:'kai-bernie',         label:'Die Gruppe spielt mit Kai auf Reisetabletten „Immer Ärger mit Bernie" und es fällt keinem auf',                   emoji:'🎭😂',  delta:+15, group:'Kai'},
+  // Janzen
+  {id:'janzen-fisch',       label:'Janzen fängt nen Fisch',                                                                                          emoji:'🎣🐟',  delta:+8,  group:'Janzen'},
+  {id:'janzen-strand',      label:'Janzen schläft wieder am Strand ein',                                                                             emoji:'😴🏖️', delta:-10, group:'Janzen'},
+  // Deria
+  {id:'deria-lachen',       label:'Derias Lachen löst am Flughafen Feueralarm aus',                                                                  emoji:'😂🚨',  delta:-2,  group:'Deria'},
+  // Carsten
+  {id:'carsten-shirt-nein', label:'Carsten darf sein Shirt nicht ausziehen (Leine reicht bis Montenegro)',                                           emoji:'👕🚫',  delta:-3,  group:'Carsten'},
+  {id:'carsten-shirt-ja',   label:'Carsten darf sein Shirt ausziehen, aber es wird zu viel für Ambar',                                               emoji:'😳',    delta:-6,  group:'Carsten'},
+  // Julien
+  {id:'julien-cocktail',    label:'Julien nimmt seine Rolle als Cocktailfee ernst und macht allen eine Runde fertig',                                emoji:'🧚🍹',  delta:+10, group:'Julien'},
+  // Dennis
+  {id:'dennis-patrol',      label:'Dennis packt seine Uniform aus und macht vor der Mittagssonne noch ne kurze Strandstreife',                       emoji:'👮‍♂️☀️', delta:-10, group:'Dennis'},
+  {id:'dennis-fruehstueck', label:'Dennis macht Frühstück',                                                                                          emoji:'🍳',    delta:+5,  group:'Dennis'},
+  {id:'dennis-nur-er',      label:'Es stellt sich raus, dass das Frühstück nur für Dennis war',                                                      emoji:'😤🍳',  delta:-8,  group:'Dennis'},
+  // Diego
+  {id:'diego-dauerwelle',   label:'Diego kommt mit Dauerwelle, weil sein Friseur seit 4 Wochen im Urlaub ist',                                      emoji:'💈😬',  delta:-2,  group:'Diego'},
+  {id:'diego-friseur',      label:'Diego trifft seinen Friseur, da der grade auch in Montenegro ist',                                                emoji:'✂️😄',  delta:+4,  group:'Diego'},
+  {id:'diego-puenktlich',   label:'Diego ist pünktlich am Flughafen (Deutsche Sommerzeit)',                                                          emoji:'✈️⏰',  delta:+4,  group:'Diego'},
+  // Ambar
+  {id:'ambar-niederlaender',label:'Ambar erwähnt in Montenegro nicht, dass sie Niederländerin ist (extrem unwahrscheinlich)',                        emoji:'🇳🇱🤫', delta:+7,  group:'Ambar'},
+  // Sonstige
+  {id:'ramon-anruf',        label:'Ramon ruft an',                                                                                                   emoji:'📱😱',  delta:-15, group:'Sonstige'},
+  {id:'sascha-dabei',       label:'Sascha ist plötzlich dabei',                                                                                      emoji:'🎉😍',  delta:+25, group:'Sonstige'},
+  {id:'keiner-stirbt',      label:'Keiner stirbt oder wird schwer verletzt',                                                                         emoji:'🙏✨',  delta:+18, group:'Sonstige'},
 ];
 
-// Build options HTML
+// Build options HTML grouped by person
 const container = document.getElementById('optionsContainer');
-const negOpts = OPTIONS.filter(o=>o.delta<0);
-const posOpts = OPTIONS.filter(o=>o.delta>0);
+const GROUP_ORDER = ['Luke','Irom','Joe','Kai','Janzen','Deria','Carsten','Julien','Dennis','Diego','Ambar','Sonstige'];
+const GROUP_EMOJI = {Luke:'🏖️',Irom:'😢',Joe:'🍺',Kai:'💊',Janzen:'🎣',Deria:'😂',Carsten:'👕',Julien:'🧚',Dennis:'👮',Diego:'💈',Ambar:'🇳🇱',Sonstige:'🎲'};
 
-function buildGroup(opts, title) {
+GROUP_ORDER.forEach(group => {
+  const opts = OPTIONS.filter(o=>o.group===group);
+  if(!opts.length) return;
   const div = document.createElement('div');
   div.className = 'option-group';
-  div.innerHTML = `<div style="font-family:'Fredoka One',sans-serif;font-size:1rem;margin-bottom:8px;opacity:.7">${title}</div>`;
+  div.innerHTML = `<div style="font-family:'Fredoka One',sans-serif;font-size:1rem;margin-bottom:8px">${GROUP_EMOJI[group]} ${group}</div>`;
   opts.forEach(opt => {
     const item = document.createElement('label');
     item.className = 'option-item';
@@ -388,11 +402,8 @@ function buildGroup(opts, title) {
     `;
     div.appendChild(item);
   });
-  return div;
-}
-
-container.appendChild(buildGroup(posOpts, '✅ Gute Vibes'));
-container.appendChild(buildGroup(negOpts, '💀 Urlaubskiller'));
+  container.appendChild(div);
+});
 
 // Event listeners
 document.querySelectorAll('input[type=checkbox]').forEach(cb=>{
