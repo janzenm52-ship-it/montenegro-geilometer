@@ -249,6 +249,25 @@
       33%{transform:translateX(-4px)}
       66%{transform:translateX(4px)}
     }
+
+    /* ── Floating delta popup ── */
+    .delta-float{
+      position:fixed;
+      font-family:'Fredoka One',sans-serif;
+      font-size:1.6rem;
+      font-weight:900;
+      pointer-events:none;
+      z-index:1000;
+      text-shadow:2px 2px 0 rgba(0,0,0,.5);
+      animation:floatUp .9s ease-out forwards;
+    }
+    .delta-float.pos{color:#6ee898}
+    .delta-float.neg{color:#ff8a8a}
+    @keyframes floatUp{
+      0%  {transform:translateY(0)   scale(1.2);opacity:1}
+      60% {transform:translateY(-50px) scale(1); opacity:1}
+      100%{transform:translateY(-90px) scale(.8);opacity:0}
+    }
   </style>
 </head>
 <body>
@@ -613,6 +632,8 @@ const OPTIONS = [
   {id:'diego-puenktlich',   label:'Diego ist pünktlich am Flughafen (Deutsche Sommerzeit)',                                                          emoji:'✈️⏰',  delta:+4,  group:'Diego'},
   // Ambar
   {id:'ambar-niederlaender',label:'Ambar erwähnt in Montenegro nicht, dass sie Niederländerin ist (extrem unwahrscheinlich)',                        emoji:'🇳🇱🤫', delta:+7,  group:'Ambar'},
+  {id:'ambar-bigmike',      label:'Ambar schaltet über die Livecam Big Mike aus dem Keller-Kerker zu',                                              emoji:'📹🔒',  delta:+2,  group:'Ambar'},
+  {id:'ambar-pirat',        label:'Er sieht auch aus wie ein Strohhutpirat',                                                                         emoji:'🏴‍☠️🎩', delta:+8,  group:'Ambar'},
   // Sonstige
   {id:'ramon-anruf',        label:'Ramon ruft an',                                                                                                   emoji:'📱😱',  delta:-15, group:'Sonstige'},
   {id:'sascha-dabei',       label:'Sascha ist plötzlich dabei',                                                                                      emoji:'🎉😍',  delta:+25, group:'Sonstige'},
@@ -643,9 +664,28 @@ GROUP_ORDER.forEach(group => {
   container.appendChild(div);
 });
 
+// Floating delta popup
+function showDeltaFloat(delta, targetEl) {
+  const rect = targetEl.getBoundingClientRect();
+  const el = document.createElement('div');
+  el.className = 'delta-float ' + (delta > 0 ? 'pos' : 'neg');
+  el.textContent = (delta > 0 ? '+' : '') + delta;
+  el.style.left = (rect.left + rect.width / 2 - 20) + 'px';
+  el.style.top  = (rect.top - 10) + 'px';
+  document.body.appendChild(el);
+  el.addEventListener('animationend', () => el.remove());
+}
+
 // Event listeners
 document.querySelectorAll('input[type=checkbox]').forEach(cb=>{
-  cb.addEventListener('change', ()=>updateAll());
+  cb.addEventListener('change', e=>{
+    const opt = OPTIONS.find(o=>o.id===cb.id);
+    if(opt){
+      const actualDelta = cb.checked ? opt.delta : -opt.delta;
+      showDeltaFloat(actualDelta, e.target);
+    }
+    updateAll();
+  });
 });
 
 function getScore(){
