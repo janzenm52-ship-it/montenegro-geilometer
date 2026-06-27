@@ -10,10 +10,40 @@
     :root{--orange:#ff6b35;--pink:#ff4081;--yellow:#ffd93d;--teal:#00bcd4;--purple:#9c27b0;--green:#4caf50;--dark:#1a1a2e}
 
     body{
-      background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 70%,#533483 100%);
+      background:#0a2a4a;
       min-height:100vh;font-family:'Nunito',sans-serif;color:#fff;
       padding-bottom:100px;
     }
+
+    /* ── Montenegro Background ── */
+    #montenegroBg{
+      position:fixed;inset:0;z-index:-1;overflow:hidden;
+    }
+    #montenegroBg svg{width:100%;height:100%;display:block}
+
+    /* Wave animations */
+    @keyframes wave1{
+      0%{d:path("M0,30 C200,0 400,60 600,30 C800,0 1000,60 1200,30 C1400,0 1600,60 1800,30 L1800,80 L0,80 Z")}
+      50%{d:path("M0,50 C200,80 400,20 600,50 C800,80 1000,20 1200,50 C1400,80 1600,20 1800,50 L1800,80 L0,80 Z")}
+      100%{d:path("M0,30 C200,0 400,60 600,30 C800,0 1000,60 1200,30 C1400,0 1600,60 1800,30 L1800,80 L0,80 Z")}
+    }
+    @keyframes wave2{
+      0%{d:path("M0,40 C300,70 600,10 900,40 C1200,70 1500,10 1800,40 L1800,80 L0,80 Z")}
+      50%{d:path("M0,20 C300,0 600,50 900,20 C1200,0 1500,50 1800,20 L1800,80 L0,80 Z")}
+      100%{d:path("M0,40 C300,70 600,10 900,40 C1200,70 1500,10 1800,40 L1800,80 L0,80 Z")}
+    }
+    .wave1{animation:wave1 4s ease-in-out infinite}
+    .wave2{animation:wave2 6s ease-in-out infinite}
+    @keyframes flagWave{
+      0%,100%{transform-origin:left center;transform:skewX(0deg)}
+      25%{transform-origin:left center;transform:skewX(6deg)}
+      75%{transform-origin:left center;transform:skewX(-4deg)}
+    }
+    .flag-wave{animation:flagWave 2s ease-in-out infinite}
+    @keyframes cloudDrift{from{transform:translateX(0)}to{transform:translateX(60px)}}
+    .cloud1{animation:cloudDrift 18s ease-in-out infinite alternate}
+    .cloud2{animation:cloudDrift 25s ease-in-out infinite alternate-reverse}
+    @keyframes sunGlow{0%,100%{filter:drop-shadow(0 0 12px #ffd93d)}50%{filter:drop-shadow(0 0 28px #ffaa00)}}
 
     /* ── Cookie Banner ── */
     #cookieBanner{
@@ -110,61 +140,60 @@
       position:absolute;font-size:2rem;animation:fall linear infinite;
     }
     @keyframes libertyClap{
-      from{transform:rotate(-8deg) scale(1)}
-      to{transform:rotate(8deg) scale(1.08)}
+      0%{transform:rotate(-4deg)}
+      50%{transform:rotate(4deg)}
+      100%{transform:rotate(-4deg)}
     }
     @keyframes gorillaRage{
-      from{transform:translateY(0) rotate(-12deg) scale(1)}
-      to{transform:translateY(-18px) rotate(12deg) scale(1.15)}
+      0%{transform:translateY(0) rotate(-6deg)}
+      50%{transform:translateY(-10px) rotate(6deg)}
+      100%{transform:translateY(0) rotate(-6deg)}
     }
     @keyframes doradeWobble{
-      0%{transform:rotate(-15deg) scale(1)}
-      50%{transform:rotate(15deg) scale(1.1)}
-      100%{transform:rotate(-15deg) scale(1)}
+      0%,100%{transform:rotate(-8deg)}
+      50%{transform:rotate(8deg)}
     }
     @keyframes fall{
       0%{transform:translateY(-60px) rotate(0deg);opacity:1}
-      100%{transform:translateY(110vh) rotate(900deg);opacity:0}
+      100%{transform:translateY(110vh) rotate(360deg);opacity:0}
     }
 
     /* ── Vomit man (< 5) ── */
     .vomit-scene{
       position:absolute;left:-100px;top:60px;font-size:3.5rem;
-      display:none;animation:vomitshake .25s infinite;
+      display:none;animation:vomitshake .8s ease-in-out infinite;
     }
     .vomit-arrow{
       position:absolute;left:-28px;top:108px;font-size:2rem;
-      display:none;animation:arrowPulse .35s infinite alternate;
+      display:none;animation:arrowPulse .9s ease-in-out infinite alternate;
     }
     @keyframes vomitshake{
-      0%{transform:rotate(-12deg) scale(1)}
-      50%{transform:rotate(12deg) scale(1.08)}
-      100%{transform:rotate(-12deg) scale(1)}
+      0%,100%{transform:rotate(-6deg)}
+      50%{transform:rotate(6deg)}
     }
-    @keyframes arrowPulse{from{transform:scale(1) translateX(0)}to{transform:scale(1.3) translateX(4px)}}
+    @keyframes arrowPulse{from{transform:scale(1) translateX(0)}to{transform:scale(1.15) translateX(5px)}}
 
     /* ── Sparkler ── */
     .sparkler-anim{
       position:absolute;top:-30px;right:5px;font-size:2.8rem;
-      display:none;animation:spark .2s infinite alternate;
+      display:none;animation:spark 1s ease-in-out infinite alternate;
     }
     @keyframes spark{
-      from{transform:scale(1) rotate(-15deg);filter:brightness(1) drop-shadow(0 0 4px gold)}
-      to{transform:scale(1.35) rotate(15deg);filter:brightness(2) drop-shadow(0 0 14px gold)}
+      from{filter:brightness(1) drop-shadow(0 0 4px gold)}
+      to{filter:brightness(1.6) drop-shadow(0 0 16px gold)}
     }
 
     /* ── Fly ── */
     .fly-anim{
       position:absolute;font-size:2rem;
-      display:none;animation:buzz .5s infinite;
+      display:none;animation:buzz 1.2s ease-in-out infinite;
     }
     @keyframes buzz{
-      0%{transform:translate(0,0) rotate(0deg)}
-      20%{transform:translate(6px,-5px) rotate(15deg)}
-      40%{transform:translate(-5px,4px) rotate(-10deg)}
-      60%{transform:translate(8px,2px) rotate(20deg)}
-      80%{transform:translate(-3px,-6px) rotate(-5deg)}
-      100%{transform:translate(0,0) rotate(0deg)}
+      0%{transform:translate(0,0)}
+      25%{transform:translate(5px,-4px)}
+      50%{transform:translate(-4px,5px)}
+      75%{transform:translate(6px,2px)}
+      100%{transform:translate(0,0)}
     }
 
     /* ── Checkboxes ── */
@@ -177,10 +206,11 @@
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
     }
     .option-group{
-      background:rgba(255,255,255,.07);
-      border:3px solid rgba(255,255,255,.25);
+      background:rgba(0,20,50,.55);
+      border:2px solid rgba(255,255,255,.18);
       border-radius:20px;padding:14px 12px;margin-bottom:12px;
-      box-shadow:4px 4px 0 rgba(0,0,0,.4);
+      box-shadow:0 4px 20px rgba(0,0,0,.35);
+      backdrop-filter:blur(10px);
     }
     .group-header{
       font-family:'Fredoka One',sans-serif;font-size:1.05rem;
@@ -211,18 +241,180 @@
 
     @keyframes scoreChange{
       0%{transform:scale(1)}
-      40%{transform:scale(1.4) rotate(-5deg)}
-      70%{transform:scale(0.9) rotate(3deg)}
-      100%{transform:scale(1) rotate(0deg)}
+      50%{transform:scale(1.15)}
+      100%{transform:scale(1)}
     }
     @keyframes glassShake{
-      0%,100%{transform:rotate(0deg)}
-      25%{transform:rotate(-4deg)}
-      75%{transform:rotate(4deg)}
+      0%,100%{transform:translateX(0)}
+      33%{transform:translateX(-4px)}
+      66%{transform:translateX(4px)}
     }
   </style>
 </head>
 <body>
+
+<!-- Montenegro Background Scene -->
+<div id="montenegroBg">
+<svg viewBox="0 0 1400 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a6db5"/>
+      <stop offset="55%" stop-color="#5bb8e8"/>
+      <stop offset="100%" stop-color="#a8d8f0"/>
+    </linearGradient>
+    <linearGradient id="seaG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a8fba"/>
+      <stop offset="100%" stop-color="#0a4f75"/>
+    </linearGradient>
+    <linearGradient id="mtn1G" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a6858"/>
+      <stop offset="100%" stop-color="#2d4a38"/>
+    </linearGradient>
+    <linearGradient id="mtn2G" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6a7a6a"/>
+      <stop offset="100%" stop-color="#3a4a3a"/>
+    </linearGradient>
+    <linearGradient id="cliffG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c8a87a"/>
+      <stop offset="100%" stop-color="#9a7a58"/>
+    </linearGradient>
+    <filter id="blur2"><feGaussianBlur stdDeviation="2"/></filter>
+    <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1400" height="800" fill="url(#skyG)"/>
+
+  <!-- Sun -->
+  <circle cx="1100" cy="110" r="55" fill="#ffd060" opacity="0.95" style="animation:sunGlow 4s ease-in-out infinite"/>
+  <circle cx="1100" cy="110" r="72" fill="#ffd060" opacity="0.2" filter="url(#blur4)"/>
+
+  <!-- Clouds -->
+  <g class="cloud1">
+    <ellipse cx="220" cy="90" rx="80" ry="28" fill="#fff" opacity="0.85"/>
+    <ellipse cx="265" cy="78" rx="50" ry="22" fill="#fff" opacity="0.85"/>
+    <ellipse cx="170" cy="80" rx="45" ry="20" fill="#fff" opacity="0.8"/>
+  </g>
+  <g class="cloud2">
+    <ellipse cx="650" cy="70" rx="65" ry="22" fill="#fff" opacity="0.7"/>
+    <ellipse cx="695" cy="60" rx="40" ry="18" fill="#fff" opacity="0.7"/>
+  </g>
+  <g class="cloud1" style="animation-duration:22s">
+    <ellipse cx="900" cy="95" rx="55" ry="20" fill="#fff" opacity="0.6"/>
+    <ellipse cx="940" cy="82" rx="35" ry="16" fill="#fff" opacity="0.6"/>
+  </g>
+
+  <!-- Far mountains (Bay of Kotor style) -->
+  <polygon points="0,480 80,280 180,380 300,220 420,340 540,190 660,310 760,180 880,290 980,160 1080,260 1180,150 1300,270 1400,200 1400,500 0,500"
+           fill="url(#mtn2G)" opacity="0.5" filter="url(#blur2)"/>
+  <!-- Closer mountains -->
+  <polygon points="0,520 100,340 220,430 360,270 480,380 600,240 720,360 840,230 960,340 1080,220 1200,320 1320,250 1400,310 1400,560 0,560"
+           fill="url(#mtn1G)" opacity="0.75"/>
+  <!-- Mountain snow caps -->
+  <polygon points="300,220 320,258 280,258" fill="#e8eef0" opacity="0.6"/>
+  <polygon points="540,190 562,232 518,232" fill="#e8eef0" opacity="0.5"/>
+  <polygon points="760,180 782,222 738,222" fill="#e8eef0" opacity="0.55"/>
+  <polygon points="980,160 1004,205 956,205" fill="#e8eef0" opacity="0.5"/>
+  <polygon points="1180,150 1205,196 1155,196" fill="#e8eef0" opacity="0.5"/>
+
+  <!-- Cliff / rocky shore -->
+  <polygon points="0,570 180,530 320,555 500,520 640,545 800,510 900,535 1000,515 1100,535 1400,505 1400,800 0,800"
+           fill="url(#cliffG)"/>
+  <!-- Rock texture lines -->
+  <path d="M80,565 Q140,545 200,558" stroke="#8a6848" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M350,540 Q420,525 490,538" stroke="#8a6848" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M700,530 Q770,515 840,528" stroke="#8a6848" stroke-width="1.5" fill="none" opacity="0.4"/>
+
+  <!-- Sea -->
+  <rect x="0" y="490" width="1400" height="80" fill="url(#seaG)" opacity="0.9"/>
+
+  <!-- Sea shimmer -->
+  <path d="M0,510 Q175,500 350,510 Q525,520 700,510 Q875,500 1050,510 Q1225,520 1400,510 L1400,520 Q1225,530 1050,520 Q875,510 700,520 Q525,530 350,520 Q175,510 0,520 Z"
+        fill="rgba(255,255,255,0.12)"/>
+
+  <!-- Waves -->
+  <path class="wave1" d="M0,30 C200,0 400,60 600,30 C800,0 1000,60 1200,30 C1400,0 1600,60 1800,30 L1800,80 L0,80 Z"
+        transform="translate(0,465)" fill="rgba(255,255,255,0.18)"/>
+  <path class="wave2" d="M0,40 C300,70 600,10 900,40 C1200,70 1500,10 1800,40 L1800,80 L0,80 Z"
+        transform="translate(0,472)" fill="rgba(255,255,255,0.10)"/>
+
+  <!-- ── Mediterranean House ── -->
+  <!-- House shadow -->
+  <ellipse cx="310" cy="548" rx="70" ry="10" fill="rgba(0,0,0,0.2)" filter="url(#blur2)"/>
+  <!-- House walls (white stucco) -->
+  <rect x="240" y="450" width="140" height="100" rx="4" fill="#f5f0e8" stroke="#d4c8b0" stroke-width="2"/>
+  <!-- Side wall (3D effect) -->
+  <polygon points="380,450 400,440 400,535 380,550" fill="#e0d8c8" stroke="#c8bca8" stroke-width="1.5"/>
+  <!-- Terracotta roof -->
+  <polygon points="228,452 392,452 406,438 410,436 228,436" fill="#c44a2a"/>
+  <polygon points="228,436 392,436 406,420 214,420" fill="#d4532e"/>
+  <!-- Roof ridge tiles -->
+  <ellipse cx="310" cy="419" rx="100" ry="5" fill="#b03c20" opacity="0.6"/>
+  <!-- Chimney -->
+  <rect x="348" y="404" width="22" height="32" rx="2" fill="#c89060" stroke="#a07040" stroke-width="1.5"/>
+  <rect x="345" y="400" width="28" height="8" rx="2" fill="#b08050"/>
+
+  <!-- Windows -->
+  <rect x="258" y="470" width="36" height="32" rx="3" fill="#87ceeb" stroke="#8899aa" stroke-width="2"/>
+  <rect x="260" y="472" width="15" height="28" rx="1" fill="#7ab8d4"/>
+  <!-- Shutters -->
+  <rect x="252" y="469" width="8" height="34" rx="2" fill="#2a6b4a" stroke="#1a4a32" stroke-width="1"/>
+  <rect x="296" y="469" width="8" height="34" rx="2" fill="#2a6b4a" stroke="#1a4a32" stroke-width="1"/>
+
+  <rect x="330" y="470" width="36" height="32" rx="3" fill="#87ceeb" stroke="#8899aa" stroke-width="2"/>
+  <rect x="332" y="472" width="15" height="28" rx="1" fill="#7ab8d4"/>
+  <rect x="324" y="469" width="8" height="34" rx="2" fill="#2a6b4a" stroke="#1a4a32" stroke-width="1"/>
+  <rect x="368" y="469" width="8" height="34" rx="2" fill="#2a6b4a" stroke="#1a4a32" stroke-width="1"/>
+
+  <!-- Door (arched, typical Mediterranean) -->
+  <path d="M285,550 L285,500 Q310,486 335,500 L335,550 Z" fill="#7a4820" stroke="#5a3010" stroke-width="2"/>
+  <circle cx="323" cy="528" r="4" fill="#d4af37"/>
+  <!-- Door step -->
+  <rect x="279" y="548" width="62" height="6" rx="2" fill="#c8b898"/>
+
+  <!-- ── Montenegro Flag ── -->
+  <!-- Flag pole -->
+  <line x1="310" y1="420" x2="310" y2="340" stroke="#888" stroke-width="3"/>
+  <circle cx="310" cy="339" r="4" fill="#d4af37"/>
+  <!-- Flag body (waving) -->
+  <g class="flag-wave" transform-origin="310 345">
+    <!-- Gold border -->
+    <rect x="310" y="342" width="78" height="52" rx="1" fill="#D4AF37"/>
+    <!-- Red center -->
+    <rect x="314" y="346" width="70" height="44" rx="1" fill="#D4282A"/>
+    <!-- Golden eagle (simplified) -->
+    <!-- Eagle body -->
+    <ellipse cx="349" cy="368" rx="8" ry="10" fill="#D4AF37"/>
+    <!-- Eagle head -->
+    <circle cx="349" cy="358" r="5" fill="#D4AF37"/>
+    <!-- Eagle beak -->
+    <polygon points="349,356 353,353 349,358" fill="#c87020"/>
+    <!-- Eagle wings -->
+    <path d="M341,364 Q330,356 328,362 Q334,368 341,368 Z" fill="#D4AF37"/>
+    <path d="M357,364 Q368,356 370,362 Q364,368 357,368 Z" fill="#D4AF37"/>
+    <!-- Eagle legs -->
+    <line x1="345" y1="378" x2="342" y2="384" stroke="#c87020" stroke-width="2"/>
+    <line x1="353" y1="378" x2="356" y2="384" stroke="#c87020" stroke-width="2"/>
+    <!-- Crown (small) -->
+    <polygon points="346,353 349,349 352,353" fill="#D4AF37"/>
+    <rect x="345" y="349" width="8" height="4" fill="#D4AF37"/>
+  </g>
+
+  <!-- Olive tree -->
+  <line x1="190" y1="550" x2="190" y2="490" stroke="#5a3a18" stroke-width="6"/>
+  <ellipse cx="190" cy="480" rx="30" ry="22" fill="#3a6a28"/>
+  <ellipse cx="175" cy="488" rx="18" ry="14" fill="#4a7a32"/>
+  <ellipse cx="205" cy="485" rx="16" ry="12" fill="#3a6020"/>
+
+  <!-- Small boat on water -->
+  <path d="M580,510 Q600,506 620,510 L618,520 L582,520 Z" fill="#e8d0a0" stroke="#a09060" stroke-width="1.5"/>
+  <line x1="600" y1="506" x2="600" y2="492" stroke="#8a7050" stroke-width="1.5"/>
+  <path d="M600,492 L618,502 L600,506 Z" fill="#fff" opacity="0.9"/>
+
+  <!-- Sea reflection of sun -->
+  <ellipse cx="1100" cy="508" rx="80" ry="8" fill="rgba(255,220,80,0.25)" filter="url(#blur2)"/>
+</svg>
+</div>
 
 <!-- Cookie Banner -->
 <div id="cookieBanner">
@@ -509,7 +701,7 @@ function updateAll(){
   const glassSvg = document.getElementById('glassSvg');
   glassSvg.style.animation='none';
   requestAnimationFrame(()=>{
-    disp.style.animation='scoreChange .45s cubic-bezier(.34,1.56,.64,1)';
+    disp.style.animation='scoreChange .4s ease-in-out';
     glassSvg.style.animation='glassShake .35s ease';
   });
 
