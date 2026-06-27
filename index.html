@@ -662,7 +662,20 @@
 
         <!-- Cocktail umbrella (≥ 85) -->
         <g id="umbrella" opacity="0">
-          <text x="42" y="36" font-size="28">☂️</text>
+          <!-- Stick -->
+          <line x1="75" y1="15" x2="95" y2="120" stroke="#a0622a" stroke-width="3" stroke-linecap="round"/>
+          <!-- Canopy segments (alternating colors) -->
+          <path d="M30,22 Q75,-10 120,22 Q110,42 97,46 Q75,52 53,46 Q40,42 30,22 Z" fill="#ff4081"/>
+          <path d="M30,22 Q52,44 75,50 Q53,46 40,42 Z" fill="#ff80b0" opacity="0.5"/>
+          <path d="M120,22 Q98,44 75,50 Q97,46 110,42 Z" fill="#ff80b0" opacity="0.5"/>
+          <path d="M53,32 Q75,50 97,32" stroke="#fff" stroke-width="1.2" fill="none" opacity="0.4"/>
+          <!-- Canopy tip -->
+          <circle cx="75" cy="12" r="4" fill="#ffd93d" stroke="#cc9900" stroke-width="1.5"/>
+          <!-- Canopy ribs -->
+          <line x1="75" y1="14" x2="32" y2="24" stroke="#c03060" stroke-width="1" opacity="0.6"/>
+          <line x1="75" y1="14" x2="53" y2="48" stroke="#c03060" stroke-width="1" opacity="0.6"/>
+          <line x1="75" y1="14" x2="97" y2="48" stroke="#c03060" stroke-width="1" opacity="0.6"/>
+          <line x1="75" y1="14" x2="118" y2="24" stroke="#c03060" stroke-width="1" opacity="0.6"/>
         </g>
       </svg>
     </div>
@@ -708,6 +721,7 @@ const OPTIONS = [
   {id:'janzen-fisch',       label:'Janzen fängt nen Fisch',                                                                                          emoji:'🎣🐟',  delta:+8,  group:'Janzen'},
   {id:'janzen-strand',      label:'Janzen schläft wieder am Strand ein',                                                                             emoji:'😴🏖️', delta:-10, group:'Janzen'},
   {id:'janzen-shorts',      label:'Janzen vergisst seine blaue Shorts und verliert seine Asics',                                                     emoji:'🩳👟',  delta:-11, group:'Janzen'},
+  {id:'janzen-krebs',       label:'Janzen wird von einem Krebs gebissen und realisiert, dass er nicht unsterblich ist',                              emoji:'🦀😱',  delta:-7,  group:'Janzen'},
   // Deria
   {id:'deria-lachen',       label:'Derias Lachen löst am Flughafen Feueralarm aus',                                                                  emoji:'😂🚨',  delta:-2,  group:'Deria'},
   {id:'deria-justin',       label:'Deria erwähnt nicht mehr als 3 Mal, dass Justin bei der BFE ist',                                                 emoji:'👮‍♂️🤐', delta:+2,  group:'Deria'},
