@@ -458,69 +458,206 @@
   <!-- Sea reflection of sun -->
   <ellipse cx="1100" cy="508" rx="80" ry="8" fill="rgba(255,220,80,0.25)" filter="url(#blur2)"/>
 
-  <!-- ── Strandbesucherin ── -->
+  <!-- ── Strandbesucherin (neu) ── -->
+  <defs>
+    <linearGradient id="skinG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8b07a"/>
+      <stop offset="100%" stop-color="#c8844a"/>
+    </linearGradient>
+    <linearGradient id="skinLegG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4956a"/>
+      <stop offset="100%" stop-color="#c07840"/>
+    </linearGradient>
+    <linearGradient id="hairG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c87828"/>
+      <stop offset="100%" stop-color="#7a3a08"/>
+    </linearGradient>
+    <linearGradient id="bikiniG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff80c0"/>
+      <stop offset="100%" stop-color="#e0208a"/>
+    </linearGradient>
+    <radialGradient id="faceG" cx="45%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#f0c090"/>
+      <stop offset="100%" stop-color="#d4905a"/>
+    </radialGradient>
+    <filter id="softBlur"><feGaussianBlur stdDeviation="1"/></filter>
+  </defs>
   <style>
     @keyframes beachSway{
-      0%,100%{transform:rotate(-2deg) translateX(0)}
-      50%{transform:rotate(2deg) translateX(3px)}
+      0%,100%{transform:rotate(-1.5deg)}
+      50%{transform:rotate(1.5deg)}
     }
-    @keyframes hairFloat{
-      0%,100%{transform:skewX(0deg)}
-      50%{transform:skewX(4deg)}
+    @keyframes hairWave{
+      0%,100%{d:path("M720,390 Q706,420 710,455 Q712,480 704,505")}
+      50%{d:path("M720,390 Q700,418 706,453 Q710,478 700,503")}
     }
-    .beach-lady{animation:beachSway 3s ease-in-out infinite;transform-origin:580px 570px}
-    .beach-hair{animation:hairFloat 2.5s ease-in-out infinite;transform-origin:580px 510px}
+    @keyframes hairWaveR{
+      0%,100%{d:path("M780,390 Q794,420 790,455 Q788,480 796,505")}
+      50%{d:path("M780,390 Q800,418 794,453 Q790,478 800,503")}
+    }
+    .lady-group{animation:beachSway 3.5s ease-in-out infinite;transform-origin:750px 568px}
+    .hair-l{animation:hairWave 2.8s ease-in-out infinite}
+    .hair-r{animation:hairWaveR 2.8s ease-in-out infinite}
   </style>
-  <g class="beach-lady">
-    <!-- Shadow -->
-    <ellipse cx="580" cy="572" rx="28" ry="6" fill="rgba(0,0,0,0.2)" filter="url(#blur2)"/>
-    <!-- Legs -->
-    <line x1="572" y1="555" x2="564" y2="572" stroke="#d4a070" stroke-width="9" stroke-linecap="round"/>
-    <line x1="586" y1="555" x2="594" y2="572" stroke="#d4a070" stroke-width="9" stroke-linecap="round"/>
-    <!-- Feet / flip flops -->
-    <ellipse cx="562" cy="573" rx="8" ry="3" fill="#ff4081"/>
-    <ellipse cx="596" cy="573" rx="8" ry="3" fill="#ff4081"/>
-    <!-- Bikini bottom -->
-    <path d="M566,548 Q580,556 594,548 L592,558 Q580,564 568,558 Z" fill="#ff6bc4"/>
-    <!-- Torso / skin -->
-    <path d="M568,520 Q580,516 592,520 L594,548 Q580,554 566,548 Z" fill="#d4a070"/>
-    <!-- Bikini top -->
-    <path d="M568,520 Q574,530 580,528 Q586,530 592,520 Q586,514 580,516 Q574,514 568,520 Z" fill="#ff6bc4"/>
-    <!-- Bikini top strings -->
-    <line x1="580" y1="516" x2="580" y2="510" stroke="#ff6bc4" stroke-width="2"/>
-    <line x1="568" y1="520" x2="562" y2="514" stroke="#ff6bc4" stroke-width="2"/>
-    <line x1="592" y1="520" x2="598" y2="514" stroke="#ff6bc4" stroke-width="2"/>
-    <!-- Left arm (raised, holding drink) -->
-    <line x1="568" y1="528" x2="552" y2="510" stroke="#d4a070" stroke-width="8" stroke-linecap="round"/>
-    <line x1="552" y1="510" x2="548" y2="498" stroke="#d4a070" stroke-width="7" stroke-linecap="round"/>
-    <!-- Cocktail in hand -->
-    <path d="M542,490 L548,498 L554,490 Z" fill="rgba(255,200,50,0.9)" stroke="#cc9900" stroke-width="1"/>
-    <rect x="547" y="480" width="2" height="10" fill="#888"/>
-    <circle cx="542" cy="480" r="3" fill="#ff4081"/><!-- cherry -->
-    <!-- Right arm (relaxed) -->
-    <line x1="592" y1="528" x2="606" y2="544" stroke="#d4a070" stroke-width="8" stroke-linecap="round"/>
-    <!-- Neck -->
-    <rect x="577" y="507" width="6" height="12" rx="3" fill="#d4a070"/>
-    <!-- Head -->
-    <circle cx="580" cy="500" r="16" fill="#e0b080"/>
-    <!-- Sunglasses -->
-    <rect x="570" y="497" width="9" height="6" rx="3" fill="rgba(0,0,0,.55)" stroke="#666" stroke-width="1"/>
-    <rect x="581" y="497" width="9" height="6" rx="3" fill="rgba(0,0,0,.55)" stroke="#666" stroke-width="1"/>
-    <line x1="579" y1="500" x2="581" y2="500" stroke="#666" stroke-width="1"/>
-    <!-- Bridge of sunglasses -->
-    <!-- Smile -->
-    <path d="M575,506 Q580,510 585,506" stroke="#c06050" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <!-- Hair (long, flowing) -->
-    <g class="beach-hair">
-      <path d="M566,492 Q558,505 560,525 Q562,538 558,548" stroke="#c87830" stroke-width="7" fill="none" stroke-linecap="round"/>
-      <path d="M594,492 Q602,505 600,525 Q598,538 602,548" stroke="#c87830" stroke-width="7" fill="none" stroke-linecap="round"/>
-      <path d="M566,488 Q580,482 594,488 Q590,494 580,492 Q570,494 566,488 Z" fill="#c87830"/>
-    </g>
-    <!-- Sun hat -->
-    <ellipse cx="580" cy="487" rx="22" ry="5" fill="#e8d080" stroke="#c8a840" stroke-width="1.5"/>
-    <path d="M565,487 Q580,478 595,487" fill="#e8c040" stroke="#c8a030" stroke-width="1.5"/>
-    <!-- Hat band -->
-    <path d="M566,487 Q580,481 594,487" stroke="#ff6bc4" stroke-width="2" fill="none"/>
+
+  <g class="lady-group">
+    <!-- Ground shadow -->
+    <ellipse cx="750" cy="570" rx="48" ry="10" fill="rgba(0,0,0,0.22)" filter="url(#softBlur)"/>
+
+    <!-- === LEGS === -->
+    <!-- Left leg -->
+    <path d="M730,500 Q724,530 720,555 Q718,562 716,568" stroke="url(#skinLegG)" stroke-width="20" stroke-linecap="round" fill="none"/>
+    <!-- Left leg highlight -->
+    <path d="M728,502 Q722,530 718,555" stroke="rgba(255,220,180,0.4)" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <!-- Right leg -->
+    <path d="M768,500 Q774,530 778,555 Q780,562 782,568" stroke="url(#skinLegG)" stroke-width="20" stroke-linecap="round" fill="none"/>
+    <!-- Right leg highlight -->
+    <path d="M770,502 Q776,530 780,555" stroke="rgba(255,220,180,0.4)" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <!-- Knees (subtle) -->
+    <ellipse cx="720" cy="535" rx="10" ry="8" fill="#c88050" opacity="0.3"/>
+    <ellipse cx="778" cy="535" rx="10" ry="8" fill="#c88050" opacity="0.3"/>
+    <!-- Feet -->
+    <path d="M710,566 Q716,570 726,568" stroke="#c88050" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path d="M778,566 Q784,570 794,568" stroke="#c88050" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <!-- Sandals -->
+    <path d="M708,568 Q718,572 728,569" stroke="#e8a840" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M776,568 Q786,572 796,569" stroke="#e8a840" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+    <!-- === BIKINI BOTTOM === -->
+    <path d="M718,492 Q750,508 782,492 Q778,512 770,518 Q750,524 730,518 Q722,512 718,492 Z" fill="url(#bikiniG)"/>
+    <!-- Bottom highlight -->
+    <path d="M722,494 Q750,507 778,494" stroke="rgba(255,200,230,0.5)" stroke-width="2" fill="none"/>
+    <!-- Side strings -->
+    <path d="M718,492 Q714,484 718,478" stroke="url(#bikiniG)" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M782,492 Q786,484 782,478" stroke="url(#bikiniG)" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+    <!-- === TORSO (hourglass) === -->
+    <!-- Hips -->
+    <path d="M716,478 Q750,492 784,478 Q782,492 782,492 Q750,508 718,492 Z" fill="url(#skinG)"/>
+    <!-- Waist (narrow) -->
+    <path d="M724,452 Q750,446 776,452 L782,478 Q750,492 718,478 Z" fill="url(#skinG)"/>
+    <!-- Waist shadow (definition) -->
+    <path d="M726,460 Q750,454 774,460" stroke="rgba(160,80,20,0.3)" stroke-width="3" fill="none"/>
+    <!-- Belly button -->
+    <ellipse cx="750" cy="472" rx="3" ry="2" fill="rgba(160,80,20,0.4)"/>
+    <!-- Chest area -->
+    <path d="M722,430 Q750,422 778,430 L776,452 Q750,446 724,452 Z" fill="url(#skinG)"/>
+
+    <!-- === BIKINI TOP === -->
+    <!-- Left cup -->
+    <path d="M722,432 Q736,444 750,440 Q738,424 724,428 Z" fill="url(#bikiniG)"/>
+    <!-- Right cup -->
+    <path d="M778,432 Q764,444 750,440 Q762,424 776,428 Z" fill="url(#bikiniG)"/>
+    <!-- Top highlights -->
+    <path d="M726,433 Q736,440 746,438" stroke="rgba(255,200,230,0.5)" stroke-width="1.5" fill="none"/>
+    <path d="M774,433 Q764,440 754,438" stroke="rgba(255,200,230,0.5)" stroke-width="1.5" fill="none"/>
+    <!-- Center knot -->
+    <ellipse cx="750" cy="440" rx="5" ry="4" fill="#e0208a"/>
+    <!-- Neck string -->
+    <path d="M750,436 L748,422 M750,436 L752,422" stroke="url(#bikiniG)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- Side strings -->
+    <path d="M722,432 Q714,430 710,436" stroke="url(#bikiniG)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <path d="M778,432 Q786,430 790,436" stroke="url(#bikiniG)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+    <!-- === SHOULDERS / ARMS === -->
+    <!-- Left shoulder -->
+    <ellipse cx="716" cy="428" rx="12" ry="10" fill="url(#skinG)"/>
+    <!-- Left arm raised (holding cocktail) -->
+    <path d="M716,428 Q698,408 688,388 Q684,376 688,366" stroke="url(#skinG)" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <!-- Left forearm -->
+    <path d="M688,368 Q692,355 698,348" stroke="url(#skinG)" stroke-width="13" stroke-linecap="round" fill="none"/>
+    <!-- Hand -->
+    <ellipse cx="700" cy="345" rx="9" ry="7" fill="#d4905a"/>
+
+    <!-- Right shoulder -->
+    <ellipse cx="784" cy="428" rx="12" ry="10" fill="url(#skinG)"/>
+    <!-- Right arm relaxed, hand on hip -->
+    <path d="M784,428 Q800,448 802,468" stroke="url(#skinG)" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <ellipse cx="803" cy="472" rx="9" ry="7" fill="#d4905a"/>
+
+    <!-- === COCKTAIL in hand === -->
+    <!-- Glass -->
+    <path d="M692,330 L698,345 L706,330 Z" fill="rgba(180,240,255,0.85)" stroke="rgba(100,180,220,0.8)" stroke-width="1.5"/>
+    <!-- Drink (pink) -->
+    <path d="M694,336 L698,345 L704,336 Z" fill="rgba(255,120,180,0.8)"/>
+    <!-- Stem -->
+    <line x1="699" y1="345" x2="699" y2="354" stroke="rgba(150,200,220,0.9)" stroke-width="2"/>
+    <!-- Base -->
+    <ellipse cx="699" cy="355" rx="6" ry="2" fill="rgba(150,200,220,0.7)"/>
+    <!-- Umbrella in cocktail -->
+    <line x1="699" y1="338" x2="694" y2="328" stroke="#a06020" stroke-width="1.5"/>
+    <path d="M688,328 Q694,322 700,328" fill="#ff80c0" stroke="#c04080" stroke-width="1"/>
+    <circle cx="694" cy="327" r="2" fill="#ffd93d"/>
+    <!-- Cherry -->
+    <circle cx="706" cy="332" r="3" fill="#cc2040"/>
+    <line x1="706" y1="329" x2="708" y2="323" stroke="#3a7a20" stroke-width="1.5"/>
+
+    <!-- === NECK === -->
+    <path d="M742,418 Q750,414 758,418 L756,430 Q750,434 744,430 Z" fill="url(#skinG)"/>
+    <!-- Collar bones subtle -->
+    <path d="M726,430 Q738,426 750,428 Q762,426 774,430" stroke="rgba(160,80,20,0.25)" stroke-width="2" fill="none"/>
+
+    <!-- === HEAD === -->
+    <ellipse cx="750" cy="396" rx="32" ry="34" fill="url(#faceG)"/>
+    <!-- Jaw highlight -->
+    <path d="M724,406 Q750,428 776,406" stroke="rgba(200,120,60,0.2)" stroke-width="4" fill="none"/>
+
+    <!-- === HAIR (behind face) === -->
+    <!-- Back hair volume -->
+    <path d="M720,388 Q706,405 704,435 Q702,460 698,488 Q696,502 692,514" stroke="url(#hairG)" stroke-width="18" stroke-linecap="round" fill="none" class="hair-l"/>
+    <path d="M780,388 Q794,405 796,435 Q798,460 802,488 Q804,502 808,514" stroke="url(#hairG)" stroke-width="18" stroke-linecap="round" fill="none" class="hair-r"/>
+    <!-- Hair highlight strands -->
+    <path d="M722,390 Q710,415 712,448 Q712,468 708,492" stroke="rgba(220,160,80,0.5)" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <path d="M778,390 Q790,415 788,448 Q788,468 792,492" stroke="rgba(220,160,80,0.5)" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+    <!-- === FACE === -->
+    <!-- Eyes -->
+    <ellipse cx="738" cy="394" rx="7" ry="6" fill="#fff"/>
+    <ellipse cx="762" cy="394" rx="7" ry="6" fill="#fff"/>
+    <ellipse cx="739" cy="395" rx="4.5" ry="5" fill="#4a2a0a"/>
+    <ellipse cx="763" cy="395" rx="4.5" ry="5" fill="#4a2a0a"/>
+    <ellipse cx="740" cy="394" rx="2.5" ry="3" fill="#1a0a00"/>
+    <ellipse cx="764" cy="394" rx="2.5" ry="3" fill="#1a0a00"/>
+    <!-- Eye highlights -->
+    <ellipse cx="741" cy="393" rx="1.5" ry="1.5" fill="#fff"/>
+    <ellipse cx="765" cy="393" rx="1.5" ry="1.5" fill="#fff"/>
+    <!-- Eyelashes top -->
+    <path d="M731,390 Q738,386 745,389" stroke="#2a1000" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M755,389 Q762,386 769,390" stroke="#2a1000" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Eyebrows -->
+    <path d="M732,386 Q738,382 745,384" stroke="#7a3a10" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M755,384 Q762,382 768,386" stroke="#7a3a10" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <!-- Nose -->
+    <path d="M748,400 Q750,408 752,400" stroke="#c07040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="746" cy="406" rx="3" ry="2" fill="rgba(180,90,40,0.2)"/>
+    <ellipse cx="754" cy="406" rx="3" ry="2" fill="rgba(180,90,40,0.2)"/>
+    <!-- Lips -->
+    <path d="M739,413 Q750,420 761,413" fill="#e05070" stroke="#c03050" stroke-width="1"/>
+    <path d="M739,413 Q750,410 761,413" fill="#ff7090" stroke="none"/>
+    <!-- Lip highlight -->
+    <path d="M744,411 Q750,409 756,411" stroke="rgba(255,200,200,0.5)" stroke-width="1.5" fill="none"/>
+    <!-- Cheek blush -->
+    <ellipse cx="728" cy="408" rx="9" ry="6" fill="rgba(255,140,120,0.25)"/>
+    <ellipse cx="772" cy="408" rx="9" ry="6" fill="rgba(255,140,120,0.25)"/>
+    <!-- Sunglasses (cat-eye style) -->
+    <path d="M729,393 Q738,388 747,392 Q744,400 735,400 Q729,399 729,393 Z" fill="rgba(10,10,40,0.7)" stroke="#c8a040" stroke-width="1.5"/>
+    <path d="M753,392 Q762,388 771,393 Q771,399 765,400 Q756,400 753,392 Z" fill="rgba(10,10,40,0.7)" stroke="#c8a040" stroke-width="1.5"/>
+    <!-- Cat-eye flick -->
+    <line x1="729" y1="393" x2="725" y2="389" stroke="#c8a040" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="771" y1="393" x2="775" y2="389" stroke="#c8a040" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Bridge -->
+    <line x1="747" y1="395" x2="753" y2="395" stroke="#c8a040" stroke-width="1.5"/>
+
+    <!-- === HAIR (in front, top) === -->
+    <path d="M720,386 Q735,370 750,368 Q765,370 780,386 Q770,390 750,388 Q730,390 720,386 Z" fill="url(#hairG)"/>
+    <!-- Hair part & volume -->
+    <path d="M750,368 Q748,376 748,386" stroke="rgba(200,140,60,0.3)" stroke-width="2" fill="none"/>
+    <!-- Side swept bangs -->
+    <path d="M720,386 Q726,378 735,380 Q730,388 720,386 Z" fill="#b86818"/>
+
+    <!-- === SUNGLASSES frame reflection shine === -->
+    <path d="M731,394 Q736,391 742,393" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/>
+    <path d="M755,393 Q760,391 766,394" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/>
   </g>
 </svg>
 </div>
