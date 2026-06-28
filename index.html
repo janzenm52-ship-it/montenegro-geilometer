@@ -275,6 +275,88 @@
       66%{transform:translateX(4px)}
     }
 
+    /* ══ MOBILE ══ */
+    .mobile-nav{ display:none; }
+
+    @media (max-width:700px){
+      /* Layout: column */
+      .main-layout{
+        flex-direction:column;gap:0;padding:0;
+      }
+
+      /* Glass bar: sticky at top, horizontal compact */
+      .glass-section{
+        position:sticky;top:0;z-index:50;
+        flex-direction:row;align-items:center;
+        gap:12px;padding:10px 14px;width:100%;
+        background:rgba(0,15,40,.88);
+        backdrop-filter:blur(14px);
+        border-radius:0 0 20px 20px;
+        box-shadow:0 4px 20px rgba(0,0,0,.4);
+      }
+      /* Left column inside glass bar: score + status */
+      .glass-left{
+        display:flex;flex-direction:column;
+        align-items:center;gap:4px;flex:1;
+      }
+      .score-display{ font-size:2.8rem; }
+      .score-label{ font-size:.7rem; }
+      .status-text{
+        font-size:.75rem;max-width:none;
+        min-height:auto;padding:5px 10px;
+        border-radius:8px;text-align:center;
+        border:2px solid rgba(255,255,255,.2);
+      }
+      /* Smaller glass */
+      .glass-wrap{ width:100px;height:170px;flex-shrink:0; }
+      #glassSvg{ width:100px;height:170px; }
+
+      /* Vomit man repositioned for small glass */
+      .vomit-scene{ left:-50px;top:30px;font-size:2rem; }
+      .vomit-arrow{ left:-14px;top:58px;font-size:1.2rem; }
+      .sparkler-anim{ top:-14px;right:2px;font-size:1.6rem; }
+      .fly-anim{ font-size:1.2rem; }
+
+      /* Options section: full width, scrollable */
+      .options-section{
+        min-width:0;max-width:100%;
+        padding:0 10px 20px;
+      }
+      .options-section h2{ display:none; }
+
+      /* Show mobile nav */
+      .mobile-nav{
+        display:flex;align-items:center;justify-content:space-between;
+        gap:10px;padding:10px 12px;margin-bottom:10px;margin-top:12px;
+        background:rgba(0,20,50,.7);border-radius:16px;
+        backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.15);
+      }
+      .nav-arrow{
+        background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.25);
+        color:#fff;border-radius:50%;width:42px;height:42px;
+        font-size:1.2rem;cursor:pointer;flex-shrink:0;
+        transition:background .12s;display:flex;align-items:center;justify-content:center;
+      }
+      .nav-arrow:hover,.nav-arrow:active{ background:var(--orange); }
+      .mobile-group-name{
+        font-family:'Fredoka One',sans-serif;font-size:1.2rem;
+        text-align:center;flex:1;
+        text-shadow:1px 1px 0 #000;
+      }
+      .mobile-group-dots{
+        display:flex;gap:5px;justify-content:center;margin-top:6px;flex-wrap:wrap;
+      }
+      .m-dot{
+        width:7px;height:7px;border-radius:50%;
+        background:rgba(255,255,255,.25);transition:background .2s;
+      }
+      .m-dot.active{ background:var(--orange); }
+
+      /* Hide all groups on mobile, show only active */
+      .option-group{ display:none; }
+      .option-group.mobile-active{ display:block; }
+    }
+
     /* ── Floating delta popup ── */
     .delta-float{
       position:fixed;
@@ -773,8 +855,15 @@
 
   <!-- Glass -->
   <div class="glass-section">
-    <div class="score-display" id="scoreDisplay">50</div>
-    <div class="score-label">/ 100 Geilheit-Punkte</div>
+    <!-- Mobile: score + status left of glass -->
+    <div class="glass-left">
+      <div class="score-display" id="scoreDisplay">50</div>
+      <div class="score-label">/ 100 Punkte</div>
+      <div class="status-text" id="statusText">🍹 Auf nach Montenegro!</div>
+    </div>
+
+    <!-- Desktop-only status text below glass -->
+    <div class="status-text" id="statusTextDesktop" style="display:none">🍹 Auf nach Montenegro!</div>
 
     <div class="glass-wrap" id="glassWrap">
 
@@ -898,12 +987,22 @@
       </svg>
     </div>
 
-    <div class="status-text" id="statusText">🍹 Auf nach Montenegro!</div>
   </div>
 
   <!-- Options -->
   <div class="options-section">
     <h2>🎲 Was passiert auf dem Trip?</h2>
+
+    <!-- Mobile-only carousel nav -->
+    <div class="mobile-nav" id="mobileNav">
+      <button class="nav-arrow" id="prevGroup">◀</button>
+      <div style="flex:1;text-align:center">
+        <div class="mobile-group-name" id="mobileGroupName"></div>
+        <div class="mobile-group-dots" id="mobileGroupDots"></div>
+      </div>
+      <button class="nav-arrow" id="nextGroup">▶</button>
+    </div>
+
     <div id="optionsContainer"></div>
   </div>
 
@@ -971,12 +1070,14 @@ const OPTIONS = [
 const container = document.getElementById('optionsContainer');
 const GROUP_ORDER = ['Luke','Irom','Joe','Kai','Janzen','Deria','Carsten','Julien','Dennis','Diego','Ambar','Sonstige'];
 const GROUP_EMOJI = {Luke:'🏖️',Irom:'😢',Joe:'🍺',Kai:'💊',Janzen:'🎣',Deria:'😂',Carsten:'👕',Julien:'🧚',Dennis:'👮',Diego:'💈',Ambar:'🇳🇱',Sonstige:'🎲'};
+const groupDivs = [];
 
-GROUP_ORDER.forEach(group => {
+GROUP_ORDER.forEach((group,gi) => {
   const opts = OPTIONS.filter(o=>o.group===group);
   if(!opts.length) return;
   const div = document.createElement('div');
   div.className = 'option-group';
+  div.dataset.groupIndex = groupDivs.length;
   div.innerHTML = `<div class="group-header">${GROUP_EMOJI[group]} ${group}</div>`;
   opts.forEach(opt => {
     const item = document.createElement('label');
@@ -989,7 +1090,52 @@ GROUP_ORDER.forEach(group => {
     div.appendChild(item);
   });
   container.appendChild(div);
+  groupDivs.push(div);
 });
+
+// ── Mobile carousel ──
+let currentGroupIdx = 0;
+
+function buildDots(){
+  const dotsEl = document.getElementById('mobileGroupDots');
+  if(!dotsEl) return;
+  dotsEl.innerHTML = groupDivs.map((_,i)=>`<div class="m-dot${i===currentGroupIdx?' active':''}"></div>`).join('');
+}
+
+function showMobileGroup(idx){
+  currentGroupIdx = ((idx % groupDivs.length) + groupDivs.length) % groupDivs.length;
+  const isMobile = window.innerWidth <= 700;
+  groupDivs.forEach((d,i) => {
+    if(isMobile){ d.classList.toggle('mobile-active', i===currentGroupIdx); }
+    else { d.classList.remove('mobile-active'); }
+  });
+  const nameEl = document.getElementById('mobileGroupName');
+  if(nameEl){
+    const grp = groupDivs[currentGroupIdx]?.querySelector('.group-header')?.textContent || '';
+    nameEl.textContent = grp;
+  }
+  buildDots();
+}
+
+function initMobile(){
+  const isMobile = window.innerWidth <= 700;
+  if(isMobile){ showMobileGroup(currentGroupIdx); }
+  else { groupDivs.forEach(d=>d.classList.remove('mobile-active')); }
+}
+
+document.getElementById('prevGroup')?.addEventListener('click', ()=>showMobileGroup(currentGroupIdx-1));
+document.getElementById('nextGroup')?.addEventListener('click', ()=>showMobileGroup(currentGroupIdx+1));
+
+// Swipe support
+let touchStartX = 0;
+document.getElementById('optionsContainer')?.addEventListener('touchstart', e=>{ touchStartX=e.touches[0].clientX; }, {passive:true});
+document.getElementById('optionsContainer')?.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx)>50){ showMobileGroup(currentGroupIdx + (dx<0?1:-1)); }
+}, {passive:true});
+
+window.addEventListener('resize', initMobile);
+initMobile();
 
 // Floating delta popup
 function showDeltaFloat(delta, targetEl) {
@@ -1077,8 +1223,12 @@ function updateAll(){
   else if(score < 60) disp.style.color='#ffd93d';
   else disp.style.color='#6ee898';
 
-  // Status text
-  document.getElementById('statusText').textContent = getStatus(score);
+  // Status text (mobile in glass bar, desktop separate)
+  const statusMsg = getStatus(score);
+  const stMob = document.getElementById('statusText');
+  const stDsk = document.getElementById('statusTextDesktop');
+  if(stMob) stMob.textContent = statusMsg;
+  if(stDsk) stDsk.textContent = statusMsg;
 
   // --- Liquid fill ---
   // Glass interior: top at y=28, bottom at y=310, height=282
